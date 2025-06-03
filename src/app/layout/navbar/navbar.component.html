@@ -1,0 +1,49 @@
+<nav class="navbar">
+  <div class="logo">
+    <img src="assets/logo-nnam.png" alt="Nnam Logo" />
+    <span class="brand">N <span>nam</span></span>
+    <small>Du champ à votre assiette!</small>
+  </div>
+  <ul class="nav-links">
+    <li><a routerLink="/">Accueil</a></li>
+    <li>
+      <form class="searchbar" (submit)="$event.preventDefault()">
+        <input type="text" placeholder="Rechercher..."  name="search" />
+        <button type="submit"><i class="fas fa-search"></i></button>
+      </form>
+    </li>
+    <li class="dropdown" (mouseenter)="categoryOpen=true" (mouseleave)="categoryOpen=false">
+      <a (click)="toggleCategoryDropdown()">Catégories <i class="fas fa-chevron-down"></i></a>
+      <ul class="dropdown-menu" *ngIf="categoryOpen">
+        <li><a routerLink="/categories/legumes">Légumes</a></li>
+        <li><a routerLink="/categories/fruits">Fruits</a></li>
+        <li><a routerLink="/categories/epices">Épices</a></li>
+      </ul>
+    </li>
+    
+    <!-- Liste déroulante pour S'inscrire -->
+    <li class="dropdown" (mouseenter)="inscriptionOpen=true" (mouseleave)="inscriptionOpen=false">
+      <a (click)="toggleInscriptionDropdown()">S'inscrire <i class="fas fa-chevron-down"></i></a>
+      <ul class="dropdown-menu" *ngIf="inscriptionOpen">
+        <li><a routerLink="/inscription/agriculteur">Agriculteur</a></li>
+        <li><a routerLink="/inscription/consommateur">Consommateur</a></li>
+      </ul>
+    </li>
+    
+    <!-- Liste déroulante pour Se connecter -->
+    <li class="dropdown" (mouseenter)="connexionOpen=true" (mouseleave)="connexionOpen=false">
+      <a (click)="toggleConnexionDropdown()">Se connecter <i class="fas fa-chevron-down"></i></a>
+      <ul class="dropdown-menu" *ngIf="connexionOpen">
+        <li><a routerLink="/connexion/agriculteur">Agriculteur</a></li>
+        <li><a routerLink="/connexion/consommateur">Consommateur</a></li>
+      </ul>
+    </li>
+    
+    <li>
+      <a routerLink="/panier">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-badge">3</span>
+      </a>
+    </li>
+  </ul>
+</nav>
