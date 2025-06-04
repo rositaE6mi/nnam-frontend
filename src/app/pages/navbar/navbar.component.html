@@ -1,0 +1,32 @@
+<nav class="navbar">
+  <div class="logo">
+    <img src="assets/logo-nnam.png" alt="Nnam Logo" />
+    <span class="brand">N <span>nam</span></span>
+    <small>Du champ � votre assiette!</small>
+  </div>
+  <ul class="nav-links">
+    <li><a routerLink="/">Accueil</a></li>
+    <li>
+      <form class="searchbar" (submit)="$event.preventDefault()">
+        <input type="text" placeholder="Rechercher..." [(ngModel)]="search" name="search" />
+        <button type="submit"><i class="fas fa-search"></i></button>
+      </form>
+    </li>
+    <li class="dropdown" (mouseenter)="categoryOpen=true" (mouseleave)="categoryOpen=false">
+      <a (click)="toggleCategoryDropdown()">Cat�gories <i class="fas fa-chevron-down"></i></a>
+      <ul class="dropdown-menu" *ngIf="categoryOpen">
+        <li><a routerLink="/categories/legumes">L�gumes</a></li>
+        <li><a routerLink="/categories/fruits">Fruits</a></li>
+        <li><a routerLink="/categories/epices">�pices</a></li>
+      </ul>
+    </li>
+    <li><a routerLink="/inscription">S'inscrire</a></li>
+    <li><a routerLink="/connexion">Se connecter</a></li>
+    <li>
+      <a routerLink="/panier">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-badge">3</span>
+      </a>
+    </li>
+  </ul>
+</nav>

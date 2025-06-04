@@ -12,7 +12,11 @@ interface ProductCard {
 @Component({
   selector: 'app-home',
   standalone: true,
+<<<<<<< Updated upstream
   imports: [CommonModule ],
+=======
+  imports: [CommonModule],
+>>>>>>> Stashed changes
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
