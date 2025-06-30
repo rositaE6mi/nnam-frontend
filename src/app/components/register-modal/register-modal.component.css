@@ -1,0 +1,5 @@
+.text-nnam-brown { color: #6D4C41; }
+.btn-nnam-green { background: #4CAF50; color: #fff; }
+.btn-nnam-green:hover { background: #388e3c; }
+.modal-backdrop { z-index: 1040; }
+.modal { z-index: 1050; }

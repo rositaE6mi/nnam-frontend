@@ -1,0 +1,48 @@
+<!-- pages/register/register.component.html -->
+<div class="max-w-xl mx-auto bg-white p-6 mt-10 rounded shadow-md">
+  <h2 class="text-2xl font-bold text-nnam-brown mb-4 text-center">Inscription {{ type | titlecase }}</h2>
+
+  <form (ngSubmit)="sInscrire()" #registerForm="ngForm" class="space-y-4">
+
+    <!-- Nom -->
+    <div>
+      <label for="nom" class="block text-sm font-medium text-gray-700">Nom Complet</label>
+      <input type="text" id="nom" name="nom" required ngModel
+             class="form-input w-full px-3 py-2 border rounded" />
+    </div>
+
+    <!-- Localisation uniquement pour agriculteur -->
+    <div *ngIf="type === 'agriculteur'">
+      <label for="localisation" class="block text-sm font-medium text-gray-700">Localisation</label>
+      <input type="text" id="localisation" name="localisation" required ngModel
+             class="form-input w-full px-3 py-2 border rounded" />
+    </div>
+
+    <!-- Email -->
+    <div>
+      <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+      <input type="email" id="email" name="email" required ngModel
+             class="form-input w-full px-3 py-2 border rounded" />
+    </div>
+
+    <!-- Téléphone -->
+    <div>
+      <label for="telephone" class="block text-sm font-medium text-gray-700">Téléphone</label>
+      <input type="tel" id="telephone" name="telephone" required ngModel
+             class="form-input w-full px-3 py-2 border rounded" />
+    </div>
+
+    <!-- Mot de passe -->
+    <div>
+      <label for="motDePasse" class="block text-sm font-medium text-gray-700">Mot de passe</label>
+      <input type="password" id="motDePasse" name="motDePasse" required ngModel
+             class="form-input w-full px-3 py-2 border rounded" />
+    </div>
+
+    <!-- Bouton -->
+    <button type="submit"
+            class="w-full bg-nnam-green text-white py-2 px-4 rounded hover:bg-green-600">
+      Créer mon compte
+    </button>
+  </form>
+</div>

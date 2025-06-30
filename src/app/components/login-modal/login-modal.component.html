@@ -1,0 +1,33 @@
+<div class="modal-backdrop fade show" *ngIf="open"></div>
+<div class="modal d-block" tabindex="-1" *ngIf="open">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header border-bottom-0">
+        <h5 class="modal-title text-nnam-brown">Connexion {{ type === 'agriculteur' ? 'Agriculteur' : type === 'client' ? 'Client' : '' }}</h5>
+        <button type="button" class="btn-close" (click)="close.emit()"></button>
+      </div>
+      <form (ngSubmit)="onSubmit()">
+        <div class="modal-body">
+          <div class="mb-2">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" required [(ngModel)]="form.email" name="email">
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Mot de passe</label>
+            <input type="password" class="form-control" required [(ngModel)]="form.password" name="password">
+          </div>
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <div>
+              <input type="checkbox" [(ngModel)]="form.remember" name="remember" class="form-check-input me-1">
+              <label class="form-check-label">Se souvenir de moi</label>
+            </div>
+            <a href="#" class="text-nnam-orange small">Mot de passe oublié ?</a>
+          </div>
+        </div>
+        <div class="modal-footer border-top-0">
+          <button type="submit" class="btn btn-nnam-orange w-100">Se connecter</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

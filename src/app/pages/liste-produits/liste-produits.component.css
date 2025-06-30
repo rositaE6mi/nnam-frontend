@@ -1,0 +1,51 @@
+/* Utilisation des variables et classes personnalisées de la page Agriculteur */
+
+/* Styles spécifiques pour la liste des produits */
+.table-auto {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-auto th,
+.table-auto td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.table-auto th {
+  font-weight: bold;
+  background-color: #f7fafc;
+}
+
+.table-auto tr:hover {
+  background-color: #f1f5f9;
+}
+
+/* Responsive table */
+@media (max-width: 640px) {
+  .table-auto th,
+  .table-auto td {
+    white-space: nowrap;
+  }
+
+  .hidden.sm\:table-cell {
+    display: none;
+  }
+
+  .text-xs.sm\:text-sm {
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
+}
+
+@media (min-width: 641px) {
+  .hidden.sm\:table-cell {
+    display: table-cell;
+  }
+
+  .text-xs.sm\:text-sm {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+}

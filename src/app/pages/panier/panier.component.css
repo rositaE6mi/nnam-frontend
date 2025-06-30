@@ -1,0 +1,7 @@
+table th, table td {
+  border-collapse: collapse;
+}
+
+button {
+  cursor: pointer;
+}

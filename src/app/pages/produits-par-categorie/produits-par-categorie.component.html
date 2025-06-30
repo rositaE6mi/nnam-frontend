@@ -1,0 +1,38 @@
+<div class="max-w-7xl mx-auto px-4 py-10">
+  <h2 class="text-3xl font-bold text-nnam-brown text-center mb-8">
+    Produits de la catégorie : {{ nomCategorie | titlecase }}
+  </h2>
+
+  <div *ngIf="produits.length === 0" class="text-gray-600 text-center">
+    Aucun produit disponible dans cette catégorie.
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <div
+      *ngFor="let produit of produits"
+      class="product-card bg-white rounded-lg shadow-md overflow-hidden"
+    >
+      <div
+        class="h-40 bg-gradient-to-br flex items-center justify-center"
+        [ngClass]="produit.bgClass"
+      >
+        <i class="fas text-white text-5xl" [ngClass]="produit.icon"></i>
+      </div>
+
+      <div class="p-4">
+        <h4 class="font-semibold text-nnam-brown">{{ produit.nom }}</h4>
+        <p class="text-gray-600 text-sm mt-1">{{ produit.description }}</p>
+
+        <div class="flex justify-between items-center mt-4">
+          <span class="text-nnam-orange font-bold">{{ produit.prix }} FCFA/kg</span>
+          <button
+            class="bg-nnam-green text-white px-3 py-1 rounded hover:bg-green-600 transition"
+            (click)="ajouterAuPanier(produit.id)"
+          >
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

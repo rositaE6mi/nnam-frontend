@@ -1,0 +1,6 @@
+.text-nnam-brown { color: #6D4C41; }
+.text-nnam-orange { color: #FF9800; }
+.btn-nnam-orange { background: #FF9800; color: #fff; }
+.btn-nnam-orange:hover { background: #d97c05; }
+.modal-backdrop { z-index: 1040; }
+.modal { z-index: 1050; }
