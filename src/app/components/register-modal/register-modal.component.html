@@ -1,0 +1,56 @@
+<div class="modal-backdrop fade show" *ngIf="open"></div>
+<div class="modal d-block" tabindex="-1" *ngIf="open">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header border-bottom-0">
+        <h5 class="modal-title text-nnam-brown">Inscription {{ isFarmer ? 'Agriculteur' : isClient ? 'Client' : '' }}</h5>
+        <button type="button" class="btn-close" (click)="close.emit()"></button>
+      </div>
+      <form (ngSubmit)="onSubmit()">
+        <div class="modal-body">
+          <div class="row g-2">
+            <div class="col">
+              <label class="form-label">Prénom</label>
+              <input type="text" class="form-control" required [(ngModel)]="form.prenom" name="prenom">
+            </div>
+            <div class="col">
+              <label class="form-label">Nom</label>
+              <input type="text" class="form-control" required [(ngModel)]="form.nom" name="nom">
+            </div>
+          </div>
+          <div class="mt-2">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" required [(ngModel)]="form.email" name="email">
+          </div>
+          <div class="mt-2">
+            <label class="form-label">Téléphone</label>
+            <input type="tel" class="form-control" required [(ngModel)]="form.tel" name="tel">
+          </div>
+          <div *ngIf="isFarmer" class="mt-2">
+            <label class="form-label">Localisation de la ferme</label>
+            <input type="text" class="form-control" [(ngModel)]="form.localisation" name="localisation">
+            <label class="form-label mt-2">Superficie (hectares)</label>
+            <input type="number" class="form-control" [(ngModel)]="form.superficie" name="superficie">
+            <label class="form-label mt-2">Types de cultures</label>
+            <textarea class="form-control" [(ngModel)]="form.cultures" name="cultures"></textarea>
+          </div>
+          <div *ngIf="isClient" class="mt-2">
+            <label class="form-label">Adresse de livraison</label>
+            <textarea class="form-control" [(ngModel)]="form.adresse" name="adresse"></textarea>
+          </div>
+          <div class="mt-2">
+            <label class="form-label">Mot de passe</label>
+            <input type="password" class="form-control" required [(ngModel)]="form.password" name="password">
+          </div>
+          <div class="mt-2">
+            <label class="form-label">Confirmer mot de passe</label>
+            <input type="password" class="form-control" required [(ngModel)]="form.confirmPassword" name="confirmPassword">
+          </div>
+        </div>
+        <div class="modal-footer border-top-0">
+          <button type="submit" class="btn btn-nnam-green w-100">S'inscrire</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,40 @@
+<div class="max-w-7xl mx-auto px-4 py-8">
+  <div class="bg-white rounded-lg shadow-lg p-6">
+    <h2 class="text-2xl font-bold text-nnam-brown mb-4">Liste des Produits</h2>
+    <div *ngIf="produits.length === 0" class="text-gray-500 italic text-center py-8">
+      <i class="fas fa-box-open text-4xl mb-2"></i>
+      <p>Aucun produit ajouté.</p>
+    </div>
+
+    <div *ngFor="let p of produits" class="border rounded-lg p-4 mb-3 hover:shadow-md transition-shadow">
+      <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
+        <div class="flex-1">
+          <h3 class="font-semibold text-nnam-brown text-lg">{{ p.nomProduit }}</h3>
+          <p class="text-gray-600 text-sm">{{ p.prixU }} FCFA/kg - Stock: {{ p.stock.quantiteStock || 0 }}kg</p>
+          <p *ngIf="p.description" class="text-gray-500 text-sm mt-1">{{ p.description }}</p>
+          <span class="inline-block text-xs px-2 py-1 rounded-full mt-2"
+            [ngClass]="{
+              'bg-green-100 text-green-800': p.stock.quantiteStock > 0,
+              'bg-red-100 text-red-800': p.stock.quantiteStock === 0
+            }">
+            {{ p.stock.quantiteStock > 0 ? 'Actif' : 'Rupture' }}
+          </span>
+        </div>
+        <div class="flex space-x-2 sm:flex-col sm:space-x-0 sm:space-y-2 lg:flex-row lg:space-y-0 lg:space-x-2">
+          <button 
+            (click)="modifierProduit(p.idProduit)" 
+            class="flex-1 sm:flex-none bg-blue-500 text-white px-3 py-2 rounded hover:bg-blue-600 transition-colors">
+            <i class="fas fa-edit mr-1"></i>
+            <span class="sm:hidden lg:inline">Modifier</span>
+          </button>
+          <button 
+            (click)="supprimerProduit(p.idProduit)" 
+            class="flex-1 sm:flex-none bg-red-500 text-white px-3 py-2 rounded hover:bg-red-600 transition-colors">
+            <i class="fas fa-trash mr-1"></i>
+            <span class="sm:hidden lg:inline">Supprimer</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

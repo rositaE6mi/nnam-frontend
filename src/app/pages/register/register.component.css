@@ -1,0 +1,25 @@
+/* pages/register/register.component.css */
+
+form input {
+  transition: all 0.2s ease-in-out;
+  border: 1px solid #ccc;
+}
+
+form input:focus {
+  border-color: var(--nnam-green);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+}
+
+button {
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #43a047; /* plus foncé que --nnam-green */
+}
+
+label {
+  color: #333;
+  font-weight: 500;
+}

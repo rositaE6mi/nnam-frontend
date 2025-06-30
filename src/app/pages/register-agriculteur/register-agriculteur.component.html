@@ -1,0 +1,47 @@
+<div class="container mt-4">
+  <h2 class="text-success text-center mb-4">Inscription Agriculteur</h2>
+
+  <form (ngSubmit)="register()" #formRef="ngForm">
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label>Prénom</label>
+        <input class="form-control" [(ngModel)]="agriculteur.prenom" name="prenom" required>
+      </div>
+      <div class="col-md-6">
+        <label>Nom</label>
+        <input class="form-control" [(ngModel)]="agriculteur.nom" name="nom" required>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label>Email</label>
+      <input type="email" class="form-control" [(ngModel)]="agriculteur.email" name="email" required>
+    </div>
+
+    <div class="mb-3">
+      <label>Mot de passe</label>
+      <input type="password" class="form-control" [(ngModel)]="agriculteur.password" name="password" required>
+    </div>
+
+    <div class="mb-3">
+      <label>Localisation de la ferme</label>
+      <input class="form-control" [(ngModel)]="agriculteur.localisationFerme" name="localisationFerme" required>
+    </div>
+
+    <div class="mb-3">
+      <label>Superficie (hectares)</label>
+      <input type="number" class="form-control" [(ngModel)]="agriculteur.superficie" name="superficie" required>
+    </div>
+
+    <div class="mb-3">
+      <label>Types de cultures</label>
+      <textarea class="form-control" [(ngModel)]="agriculteur.cultures" name="cultures" rows="2" required></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-success w-100">
+      <i class="fas fa-user-plus me-2"></i>S'inscrire
+    </button>
+
+    <div *ngIf="message" class="alert alert-danger mt-3">{{ message }}</div>
+  </form>
+</div>
