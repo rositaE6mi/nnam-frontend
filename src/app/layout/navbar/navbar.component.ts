@@ -1,4 +1,3 @@
-// navbar.component.ts
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { PanierService } from '../../core/services/panier.service';
@@ -20,7 +19,7 @@ export class NavbarComponent implements OnInit {
   dropdownOpen: string | null = null;
   mobileMenuOpen = false;
   itemCount$!: Observable<number>;
-  userType: 'client' | 'agriculteur' | 'admin' | null = null;
+  userType: 'CLIENT' | 'AGRICULTEUR' | 'ADMIN' | null = null;
 
   categories: Categorie[] = [];
   searchQuery = '';

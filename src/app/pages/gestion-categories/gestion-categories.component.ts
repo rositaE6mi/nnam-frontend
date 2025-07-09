@@ -33,8 +33,9 @@ export class GestionCategoriesComponent implements OnInit {
   ){}
 
   ngOnInit(): void {
-    if (this.authService.getUserType() !== 'admin') {
-      alert("Accès refusé.");
+    const userType = this.authService.getUserType();
+    if (!userType || userType.toLowerCase() !== 'admin') {
+      alert("Accès refusé. Vous devez être administrateur.");
       this.router.navigate(['/']);
       return;
     }
@@ -42,14 +43,23 @@ export class GestionCategoriesComponent implements OnInit {
   }
 
   chargerCategories(): void {
-    this.categorieService.getAllCategories().subscribe((data) => this.categories = data);
+    this.categorieService.getAllCategories().subscribe({
+      next: (data) => this.categories = data,
+      error: (err) => {
+        console.error("Erreur chargement catégories :", err);
+        alert("Erreur lors du chargement des catégories.");
+      }
+    });
   }
 
   commencerEdition(idCat: number): void {
     const cat = this.categories.find((c) => c.idCat === idCat);
     if (cat) {
+      // Cloner l'objet pour ne pas modifier la liste directement
       this.nouvelleCategorie = { ...cat };
       this.isEditing = true;
+    } else {
+      alert("Catégorie non trouvée.");
     }
   }
 
@@ -59,35 +69,49 @@ export class GestionCategoriesComponent implements OnInit {
   }
 
   sauvegarderCategorie(): void {
+    if (!this.nouvelleCategorie.nomCat.trim()) {
+      alert("Le nom de la catégorie est obligatoire.");
+      return;
+    }
+
     if (this.isEditing) {
-      this.categorieService.modifierCategorie(this.nouvelleCategorie).subscribe((res) => {
-        alert('Catégorie modifiée avec succès');
-        this.chargerCategories();
-        this.annulerEdition();
-      }, (err) => {
-        console.error(err);
-        alert("Erreur lors de la modification.");
+      this.categorieService.modifierCategorie(this.nouvelleCategorie).subscribe({
+        next: () => {
+          alert('Catégorie modifiée avec succès');
+          this.chargerCategories();
+          this.annulerEdition();
+        },
+        error: (err) => {
+          console.error(err);
+          alert("Erreur lors de la modification.");
+        }
       });
     } else {
-      this.categorieService.ajouterCategorie(this.nouvelleCategorie).subscribe((res) => {
-        alert('Catégorie ajoutée avec succès');
-        this.chargerCategories();
-        this.annulerEdition();
-      }, (err) => {
-        console.error(err);
-        alert("Erreur lors de l'ajout.");
+      this.categorieService.ajouterCategorie(this.nouvelleCategorie).subscribe({
+        next: () => {
+          alert('Catégorie ajoutée avec succès');
+          this.chargerCategories();
+          this.annulerEdition();
+        },
+        error: (err) => {
+          console.error(err);
+          alert("Erreur lors de l'ajout.");
+        }
       });
     }
   }
 
   supprimer(idCat: number): void {
     if (confirm("Êtes-vous sûr ? Cette opération est irréversible.")) {
-      this.categorieService.supprimerCategorie(idCat).subscribe((res) => {
-        alert("Catégorie supprimée.");
-        this.chargerCategories();
-      }, (err) => {
-        console.error(err);
-        alert("Erreur lors de la suppression.");
+      this.categorieService.supprimerCategorie(idCat).subscribe({
+        next: () => {
+          alert("Catégorie supprimée.");
+          this.chargerCategories();
+        },
+        error: (err) => {
+          console.error(err);
+          alert("Erreur lors de la suppression.");
+        }
       });
     }
   }

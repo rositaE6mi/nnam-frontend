@@ -20,9 +20,9 @@ export class AppComponent {
 
   ngOnInit() {
      const type = this.authService.getUserType();
-    if (type === 'client') {
+    if (type === 'CLIENT') {
       this.router.navigate(['/client']);
-    } else if (type === 'agriculteur') {
+    } else if (type === 'AGRICULTEUR') {
       this.router.navigate(['/agriculteur']);
     }
   console.log('HomeComponent loaded');

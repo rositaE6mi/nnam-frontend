@@ -16,6 +16,8 @@ import { AdminDashboardComponent } from './pages/administrateur/administrateur.c
 import { AjouterProduitComponent } from './pages/ajouter-produit/ajouter-produit.component';
 import { ModifierProduitComponent } from './pages/modifier-produit/modifier-produit.component';
 import { LoginAdminComponent } from './pages/login-admin/login-admin.component';
+import { ClientProfileComponent } from './pages/profil-client/profil-client.component';
+import { ProfilAgriculteurComponent } from './pages/profil-agriculteur/profil-agriculteur.component';
 
 
 export const routes: Routes = [
@@ -42,6 +44,9 @@ export const routes: Routes = [
 {path:'product-detail/:id', component: ProductDetailComponent},
 {path:'admin-dashboard', component: AdminDashboardComponent },
 {path:'login-admin', component: LoginAdminComponent },
+{path: 'profil-client', component: ClientProfileComponent},
+{path: 'profil-agriculteur', component: ProfilAgriculteurComponent},
+
 
 
 

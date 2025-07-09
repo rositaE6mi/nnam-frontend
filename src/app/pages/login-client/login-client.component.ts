@@ -18,8 +18,9 @@ export class LoginClientComponent {
 
   ngOnInit(): void {
     const type = this.authService.getUserType();
-    if (type === 'client') this.router.navigate(['/client']);
-    if (type === 'agriculteur') this.router.navigate(['/agriculteur']);
+    if (type === 'CLIENT') this.router.navigate(['/client']);
+    if (type === 'AGRICULTEUR') this.router.navigate(['/agriculteur']);
+    if (type === 'ADMIN') this.router.navigate(['/admin-dashboard']);
   }
 
   login(): void {
@@ -27,7 +28,7 @@ export class LoginClientComponent {
     if (stored) {
       const user = JSON.parse(stored);
       if (user.email === this.credentials.email && user.password === this.credentials.password) {
-        this.authService.setUserType('client');
+        this.authService.setUserType('CLIENT');
         this.router.navigate(['/client']);
         return;
       }

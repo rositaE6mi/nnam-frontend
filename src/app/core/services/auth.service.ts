@@ -1,70 +1,94 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { environment } from '../../../environments/environment.prod';
-import { RegisterClient, RegisterAgriculteur } from '../models/user-register.model';
+import { Client, Agriculteur } from '../models/user-register.model';
 import { Router } from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private apiUrl = environment.apiUrl;
-  private adminCredentials = { username: 'admin', password: 'password' };
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  // Méthode pour définir le type d'utilisateur dans le localStorage
-  setUserType(type: 'client' | 'agriculteur' | 'admin') {
+  // ✅ Définir le type d'utilisateur dans le localStorage
+  setUserType(type: 'CLIENT' | 'AGRICULTEUR' | 'ADMIN'): void {
     localStorage.setItem('userType', type);
   }
 
-  // Méthode pour obtenir le type d'utilisateur depuis le localStorage
-  getUserType(): 'client' | 'agriculteur' | 'admin' | null {
-    return localStorage.getItem('userType') as 'client' | 'agriculteur' | 'admin' | null;
+  // ✅ Obtenir le type d'utilisateur depuis le localStorage
+  getUserType(): 'CLIENT' | 'AGRICULTEUR' | 'ADMIN' | null {
+    const type = localStorage.getItem('userType');
+    if (type === 'CLIENT' || type === 'AGRICULTEUR' || type === 'ADMIN') {
+      return type;
+    }
+    return null;
   }
 
-  // Méthodes pour vérifier le type d'utilisateur
+  // ✅ Méthodes pour vérifier le type d'utilisateur
   isClient(): boolean {
-    return this.getUserType() === 'client';
+    return this.getUserType() === 'CLIENT';
   }
 
   isAgriculteur(): boolean {
-    return this.getUserType() === 'agriculteur';
+    return this.getUserType() === 'AGRICULTEUR';
   }
 
   isAdmin(): boolean {
-    return this.getUserType() === 'admin';
+    return this.getUserType() === 'ADMIN';
   }
 
   isAdminOrAgriculteur(): boolean {
     const type = this.getUserType();
-    return type === 'admin' || type === 'agriculteur';
+    return type === 'ADMIN' || type === 'AGRICULTEUR';
   }
 
   isAuthenticated(): boolean {
     return this.getUserType() !== null;
   }
 
-  // Méthode pour se déconnecter
+  // ✅ Déconnexion
   logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('userType');
+    this.router.navigate(['/login']); // adapte selon ta route de login
   }
 
-  // Méthode pour la connexion de l'administrateur
+  // ✅ Connexion administrateur
   loginAdmin(email: string, motDePasse: string): Observable<any> {
-    const queryParams = new URLSearchParams();
-    queryParams.set('email', email);
-    queryParams.set('motDePasse', motDePasse);
-    const url = `${this.apiUrl}/utilisateur/login-admin?${queryParams.toString()}`;
-    return this.http.post<any>(url, {});
+    const body = { email, motDePasse };
+    return this.http.post(`${this.apiUrl}/admin/login`, body);
   }
 
-  // Méthodes pour l'enregistrement
-  registerClient(data: RegisterClient): Observable<any> {
-    return this.http.post(`${this.apiUrl}/auth/register-client`, data);
+  // ✅ Enregistrement client avec redirection et notification
+  registerClient(data: Client): Observable<any> {
+    return this.http.post(`${this.apiUrl}/clients/register`, data).pipe(
+      tap(() => {
+        // Affiche une notification de succès
+        alert('Compte client créé avec succès. Vous pouvez maintenant vous connecter.');
+        // Redirige vers la page d'accueil
+        this.router.navigate(['/']);
+      })
+    );
   }
 
-  registerAgriculteur(data: RegisterAgriculteur): Observable<any> {
-    return this.http.post(`${this.apiUrl}/auth/register-agriculteur`, data);
+  // ✅ Enregistrement agriculteur avec redirection et notification
+  registerAgriculteur(data: Agriculteur): Observable<any> {
+    return this.http.post(`${this.apiUrl}/agriculteurs/register`, data).pipe(
+      tap(() => {
+        alert('Compte agriculteur créé avec succès. Vous pouvez maintenant vous connecter.');
+        this.router.navigate(['/']);
+      })
+    );
   }
+
+  getUserId(): number | null {
+  const user = localStorage.getItem('user');
+  if (user) {
+    const parsedUser = JSON.parse(user);
+    return parsedUser.idUtilisateur || null;
+  }
+  return null;
+}
+
 }
