@@ -23,7 +23,7 @@ export class LoginAgriculteurComponent {
     if (type === 'ADMIN') this.router.navigate(['/admin-dashboard']);
   }
 
-  login(): void {
+ /* login(): void {
     const stored = localStorage.getItem('agriculteur');
     if (stored) {
       const user = JSON.parse(stored);
@@ -34,5 +34,28 @@ export class LoginAgriculteurComponent {
       }
     }
     this.errorMessage = 'Email ou mot de passe invalide.';
-  }
+  }*/
+
+    login(): void {
+  this.authService.login(this.credentials.email, this.credentials.password).subscribe({
+    next: (role) => {
+      if (role === 'ADMIN') {
+        this.authService.setUserType('ADMIN');
+        this.router.navigate(['/admin-dashboard']);
+      } else if (role === 'CLIENT') {
+        this.authService.setUserType('CLIENT');
+        this.router.navigate(['/client']);
+      } else if (role === 'AGRICULTEUR') {
+        this.authService.setUserType('AGRICULTEUR');
+        this.router.navigate(['/agriculteur']);
+      } else {
+        this.errorMessage = 'Rôle inconnu.';
+      }
+    },
+    error: () => {
+      this.errorMessage = 'Email ou mot de passe invalide.';
+    }
+  });
+}
+
 }

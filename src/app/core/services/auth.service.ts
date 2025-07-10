@@ -11,12 +11,12 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  // ✅ Définir le type d'utilisateur dans le localStorage
+  // Définir le type d'utilisateur dans le localStorage
   setUserType(type: 'CLIENT' | 'AGRICULTEUR' | 'ADMIN'): void {
     localStorage.setItem('userType', type);
   }
 
-  // ✅ Obtenir le type d'utilisateur depuis le localStorage
+  // Obtenir le type d'utilisateur depuis le localStorage
   getUserType(): 'CLIENT' | 'AGRICULTEUR' | 'ADMIN' | null {
     const type = localStorage.getItem('userType');
     if (type === 'CLIENT' || type === 'AGRICULTEUR' || type === 'ADMIN') {
@@ -25,7 +25,6 @@ export class AuthService {
     return null;
   }
 
-  // ✅ Méthodes pour vérifier le type d'utilisateur
   isClient(): boolean {
     return this.getUserType() === 'CLIENT';
   }
@@ -47,48 +46,93 @@ export class AuthService {
     return this.getUserType() !== null;
   }
 
-  // ✅ Déconnexion
+  // Déconnexion
   logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('userType');
-    this.router.navigate(['/login']); // adapte selon ta route de login
+    this.router.navigate(['/login']);
   }
 
-  // ✅ Connexion administrateur
+  // Connexion administrateur
   loginAdmin(email: string, motDePasse: string): Observable<any> {
     const body = { email, motDePasse };
     return this.http.post(`${this.apiUrl}/admin/login`, body);
   }
 
-  // ✅ Enregistrement client avec redirection et notification
-  registerClient(data: Client): Observable<any> {
-    return this.http.post(`${this.apiUrl}/clients/register`, data).pipe(
-      tap(() => {
-        // Affiche une notification de succès
-        alert('Compte client créé avec succès. Vous pouvez maintenant vous connecter.');
-        // Redirige vers la page d'accueil
-        this.router.navigate(['/']);
-      })
-    );
-  }
+  // Enregistrement client
+ registerClient(data: Client): Observable<any> {
+  const payload = {
+    idUtilisateur: 0,
+    nomUtilisateur: data.nomUtilisateur,
+    prenomUtilisateur: data.prenomUtilisateur,
+    dateNaissance: data.dateNaissance,
+    lieuNaissance: data.lieuNaissance,
+    villeActuelle: data.villeActuelle,
+    quartier: data.quartier,
+    boitePostale: data.boitePostale,
+    email: data.email,
+    statut: true,
+    motDePasse: data.motDePasse,
+    idRole: 3 // ⚠️ ID du rôle "CLIENT" dans ta BDD
+  };
 
-  // ✅ Enregistrement agriculteur avec redirection et notification
+  console.log('Payload client:', payload);
+
+  return this.http.post(`${this.apiUrl}/utilisateur/add`, payload).pipe(
+    tap(() => {
+      alert('Compte client créé avec succès. Vous pouvez maintenant vous connecter.');
+      this.router.navigate(['/']);
+    })
+  );
+}
+
+
+  // Enregistrement agriculteur : stocke les données spécifiques localement
+  // et envoie uniquement les données communes au backend
   registerAgriculteur(data: Agriculteur): Observable<any> {
-    return this.http.post(`${this.apiUrl}/agriculteurs/register`, data).pipe(
-      tap(() => {
-        alert('Compte agriculteur créé avec succès. Vous pouvez maintenant vous connecter.');
-        this.router.navigate(['/']);
-      })
-    );
-  }
+  // Construis un payload qui correspond EXACTEMENT au JSON attendu par ton backend
+  const payload = {
+    idUtilisateur: 0,
+    nomUtilisateur: data.nomUtilisateur,
+    prenomUtilisateur: data.prenomUtilisateur,
+    dateNaissance: data.dateNaissance,
+    lieuNaissance: data.lieuNaissance,
+    villeActuelle: data.villeActuelle,
+    quartier: data.quartier,
+    boitePostale: data.boitePostale,
+    email: data.email,
+    statut: true, // par défaut actif, adapte si besoin
+    motDePasse: data.motDePasse,
+    idRole: 2 // ⚠️ ID du rôle "AGRICULTEUR" dans ta BDD (remplace 2 par la vraie valeur)
+  };
+
+  console.log('Payload envoyé à l’API:', payload);
+
+  return this.http.post(`${this.apiUrl}/utilisateur/add`, payload).pipe(
+    tap(() => {
+      alert('Compte agriculteur créé avec succès. Vous pouvez maintenant vous connecter.');
+      this.router.navigate(['/']);
+    })
+  );
+}
+
 
   getUserId(): number | null {
-  const user = localStorage.getItem('user');
-  if (user) {
-    const parsedUser = JSON.parse(user);
-    return parsedUser.idUtilisateur || null;
+    const user = localStorage.getItem('user');
+    if (user) {
+      const parsedUser = JSON.parse(user);
+      return parsedUser.idUtilisateur || null;
+    }
+    return null;
   }
-  return null;
+login(email: string, motDePasse: string): Observable<string> {
+  return this.http.post(`${this.apiUrl}/utilisateur/login`, null, {
+    params: { email, motDePasse },
+    responseType: 'text'
+  });
 }
 
+
+
 }
+
