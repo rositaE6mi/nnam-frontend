@@ -1,0 +1,188 @@
+<div class="max-w-7xl px-4 py-8">
+  <!-- En-tête -->
+  <div class="bg-gray-900 text-gray-50 p-6 rounded-md shadow-md mb-8">
+    <h1 class="text-3xl font-semibold">Tableau de bord Administrateur</h1>
+    <p>Gérez toutes vos données depuis cette page.</p>
+  </div>
+
+  <!-- Gestion des Catégories -->
+  <div class="bg-gray-50 p-6 rounded-md shadow-md mb-6">
+    <h2>{{ isEditing ? "Modifier une Catégorie" : "Créer une Catégorie" }}</h2>
+
+    <form (ngSubmit)="sauvegarderCategorie()">
+      <div class="mb-4">
+        <label>Nom</label>
+        <input 
+          [(ngModel)]="nouvelleCategorie.nomCat" 
+          name="nomCat" 
+          required
+          class="form-control">
+      </div>
+
+      <div class="mb-4">
+        <label>Description</label>
+        <textarea
+          [(ngModel)]="nouvelleCategorie.description" 
+          name="description" 
+          class="form-control">
+        </textarea>
+      </div>
+
+      <button 
+        type="submit" 
+        class="bg-blue-500 text-gray-50 px-4 py-2 rounded mr-4">
+        {{ isEditing ? "Enregistrer les modifications" : "Créer la catégorie" }}
+      </button>
+
+      <button 
+        *ngIf="isEditing" 
+        (click)="annuler()"
+        type="button" 
+        class="bg-gray-500 text-gray-50 px-4 py-2 rounded">
+        Annuler
+      </button>
+    </form>
+  </div>
+
+  <!-- Liste des Categories -->
+  <table class="w-full table-auto">
+    <thead>
+      <tr class="bg-gray-100">
+        <th>Id</th>
+        <th>Nom</th>
+        <th>Description</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let cat of categories">
+        <td>{{ cat.idCat }}</td>
+        <td>{{ cat.nomCat }}</td>
+        <td>{{ cat.description }}</td>
+        <td>
+          <button 
+            (click)="commencerEdition(cat.idCat)" 
+            class="bg-yellow-500 text-gray-50 px-2 py-1 mr-2 rounded">
+            Éditer
+          </button>
+          <button 
+            (click)="supprimer(cat.idCat)" 
+            class="bg-red-500 text-gray-50 px-2 py-1 rounded">
+            Supprimer
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Gestion des Produits -->
+  <div class="bg-gray-50 p-6 rounded-md shadow-md mb-6">
+    <h2>{{ isEditingProduit ? "Modifier un Produit" : "Créer un Produit" }}</h2>
+
+    <form (ngSubmit)="sauvegarderProduit()">
+      <div class="mb-4">
+        <label>Nom du Produit</label>
+        <input 
+          [(ngModel)]="nouveauProduit.nomProduit" 
+          name="nomProduit" 
+          required
+          class="form-control">
+      </div>
+
+      <div class="mb-4">
+        <label>Description</label>
+        <textarea
+          [(ngModel)]="nouveauProduit.description" 
+          name="descriptionProduit" 
+          class="form-control">
+        </textarea>
+      </div>
+
+      <div class="mb-4">
+        <label>Prix Unitaire</label>
+        <input 
+          type="number" 
+          [(ngModel)]="nouveauProduit.prixU" 
+          name="prixU" 
+          required
+          class="form-control">
+      </div>
+
+      <div class="mb-4">
+        <label>Date d'Expiration</label>
+        <input 
+          type="date" 
+          [(ngModel)]="nouveauProduit.dateExpiration" 
+          name="dateExpiration" 
+          required
+          class="form-control">
+      </div>
+
+      <div class="mb-4">
+        <label>ID de Catégorie</label>
+        <input 
+          type="number" 
+          [(ngModel)]="nouveauProduit.categorieId" 
+          name="categorieId" 
+          required
+          class="form-control">
+      </div>
+
+      <div class="mb-4">
+        <label>Stock</label>
+        <input 
+          type="number" 
+          [(ngModel)]="nouveauProduit.stock.quantiteStock" 
+          name="quantiteStock" 
+          required
+          class="form-control">
+      </div>
+
+      <button 
+        type="submit" 
+        class="bg-blue-500 text-gray-50 px-4 py-2 rounded mr-4">
+        {{ isEditingProduit ? "Enregistrer les modifications" : "Créer le produit" }}
+      </button>
+
+      <button 
+        *ngIf="isEditingProduit" 
+        (click)="annulerProduit()"
+        type="button" 
+        class="bg-gray-500 text-gray-50 px-4 py-2 rounded">
+        Annuler
+      </button>
+    </form>
+  </div>
+
+  <!-- Liste des Produits -->
+  <h2>Produits</h2>
+  <table class="w-full table-auto">
+    <thead>
+      <tr class="bg-gray-100">
+        <th>Id</th>
+        <th>Nom</th>
+        <th>Description</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of produits">
+        <td>{{ p.idProduit }}</td>
+        <td>{{ p.nomProduit }}</td>
+        <td>{{ p.description }}</td>
+        <td>
+          <button 
+            (click)="commencerEditionProduit(p.idProduit)" 
+            class="bg-yellow-500 text-gray-50 px-2 py-1 mr-2 rounded">
+            Éditer
+          </button>
+          <button 
+            (click)="supprimerProduit(p.idProduit)" 
+            class="bg-red-500 text-gray-50 px-2 py-1 rounded">
+            Supprimer
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -12,6 +12,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^18.2.0",
+<<<<<<< HEAD
 <<<<<<< Updated upstream
     "@angular/common": "^18.2.0",
     "@angular/compiler": "^18.2.0",
@@ -25,13 +26,27 @@
 >>>>>>> Stashed changes
     "@angular/platform-browser": "^18.2.0",
     "@angular/platform-browser-dynamic": "^18.2.0",
+=======
+    "@angular/common": "^18.2.13",
+    "@angular/compiler": "^18.2.0",
+    "@angular/core": "^18.2.13",
+    "@angular/forms": "^18.2.13",
+    "@angular/platform-browser": "^18.2.13",
+    "@angular/platform-browser-dynamic": "^18.2.13",
+>>>>>>> Michael-F
     "@angular/platform-server": "^18.2.0",
     "@angular/router": "^18.2.13",
     "@angular/ssr": "^18.2.18",
+    "@fortawesome/fontawesome-free": "^6.7.2",
+    "autoprefixer": "^10.4.21",
+    "bootstrap": "^5.3.6",
+    "bootstrap-icons": "^1.13.1",
     "express": "^4.18.2",
+    "postcss": "^8.5.4",
     "rxjs": "~7.8.0",
+    "tailwindcss": "^3.4.17",
     "tslib": "^2.3.0",
-    "zone.js": "~0.14.10"
+    "zone.js": "^0.14.10"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^18.2.18",

@@ -1,4 +1,5 @@
 .navbar {
+<<<<<<< HEAD
   background: #000000;
   color: #fff;
   display: flex;
@@ -9,10 +10,33 @@
   position: relative;
   z-index: 10;
 }
+=======
+  background: #009640; /* vert principal */
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 32px;
+  height: 76px; /* hauteur augmentée */
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.max-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;
+}
+
+>>>>>>> Michael-F
 .logo {
   display: flex;
   align-items: center;
   gap: 10px;
+<<<<<<< HEAD
 }
 .logo img {
   height: 32px;
@@ -37,10 +61,49 @@
   display: flex;
   align-items: center;
   gap: 1.1em;
+=======
+  cursor: pointer;
+}
+
+.logo-img {
+  height: 48px;
+  width: auto;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.brand-n {
+  color: #FBBC19; /* jaune pour le N */
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.brand-nam {
+  color: #fff;
+  font-size: 1.3em;
+  font-weight: 600;
+}
+
+.slogan {
+  font-size: 0.75em;
+  color: #fff;
+  font-style: italic;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+>>>>>>> Michael-F
   list-style: none;
   margin: 0;
   padding: 0;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> Michael-F
 .nav-links a {
   color: #fff;
   text-decoration: none;
@@ -50,10 +113,19 @@
   transition: background 0.2s;
   position: relative;
 }
+<<<<<<< HEAD
 .nav-links a:hover,
 .dropdown-menu a:hover {
   background: #936e56;
 }
+=======
+
+.nav-links a:hover,
+.dropdown-menu a:hover {
+  background: #432918; /* brun foncé au hover */
+}
+
+>>>>>>> Michael-F
 .searchbar {
   display: flex;
   align-items: center;
@@ -62,6 +134,10 @@
   overflow: hidden;
   height: 32px;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> Michael-F
 .searchbar input {
   border: none;
   outline: none;
@@ -70,28 +146,49 @@
   font-size: 1em;
   width: 120px;
 }
+<<<<<<< HEAD
 .searchbar button {
   border: none;
   background: #ffd700;
   color: #6b4b38;
+=======
+
+.searchbar button {
+  border: none;
+  background: #FBBC19;
+  color: #432918;
+>>>>>>> Michael-F
   height: 32px;
   width: 36px;
   cursor: pointer;
   font-size: 1.1em;
 }
+<<<<<<< HEAD
 .dropdown {
   position: relative;
 }
+=======
+
+.dropdown {
+  position: relative;
+}
+
+>>>>>>> Michael-F
 .dropdown-menu {
   position: absolute;
   top: 38px;
   left: 0;
   background: #fff;
+<<<<<<< HEAD
   color: #6b4b38;
+=======
+  color: #432918;
+>>>>>>> Michael-F
   min-width: 160px;
   border-radius: 0 0 6px 6px;
   box-shadow: 0 3px 16px rgba(90,50,10,0.13);
   z-index: 50;
+<<<<<<< HEAD
 }
 .dropdown-menu li {
   border-bottom: 1px solid #f4e1cb;
@@ -108,16 +205,58 @@
 .cart-badge {
   background: #ffd700;
   color: #6b4b38;
+=======
+  display: none;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu li {
+  border-bottom: 1px solid #f4e1cb;
+}
+
+.dropdown-menu li:last-child {
+  border-bottom: none;
+}
+
+.dropdown-menu a {
+  color: #432918;
+  display: block;
+  padding: 10px 16px;
+}
+
+.cart {
+  position: relative;
+}
+
+.cart-badge {
+  background: #FBBC19;
+  color: #432918;
+>>>>>>> Michael-F
   border-radius: 50%;
   font-size: 0.77em;
   padding: 2px 6px;
   position: absolute;
+<<<<<<< HEAD
   top: 2px;
   right: -8px;
   font-weight: bold;
 }
+=======
+  top: 0;
+  right: -10px;
+  font-weight: bold;
+}
+
+>>>>>>> Michael-F
 @media (max-width: 900px) {
   .navbar { flex-direction: column; height: auto; }
   .nav-links { flex-direction: column; align-items: flex-start; width: 100%; }
   .nav-links li { width: 100%; }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> Michael-F

@@ -1,1 +1,101 @@
-/* You can add global styles to this file, and also import other style files */
+
+        /* Couleurs personnalisées basées sur le logo Nnam */
+        :root {
+            --nnam-brown: #6D4C41;
+            --nnam-light-brown: #8D6E63;
+            --nnam-green: #4CAF50;
+            --nnam-orange: #FF9800;
+            --nnam-white: #FFFFFF;
+            --nnam-light-gray: #F5F5F5;
+        }
+
+        .bg-nnam-brown { background-color: var(--nnam-brown); }
+        .bg-nnam-light-brown { background-color: var(--nnam-light-brown); }
+        .bg-nnam-green { background-color: var(--nnam-green); }
+        .bg-nnam-orange { background-color: var(--nnam-orange); }
+        .text-nnam-brown { color: var(--nnam-brown); }
+        .text-nnam-green { color: var(--nnam-green); }
+        .text-nnam-orange { color: var(--nnam-orange); }
+        .border-nnam-orange { border-color: var(--nnam-orange); }
+        .border-nnam-green { border-color: var(--nnam-green); }
+
+        /* Animations personnalisées */
+        .slide-down {
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Carousel styles */
+        .carousel-container {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .carousel-slide {
+            display: none;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        .carousel-slide.active {
+            display: block;
+        }
+
+        /* Product hover effects */
+        .product-card {
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        /* Formulaires modernes */
+        .form-input {
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            transform: scale(1.02);
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+        }
+
+        /* Navigation active state */
+        .nav-link:hover {
+            color: var(--nnam-orange);
+            transition: color 0.3s ease;
+        }
+
+        /* Page transitions */
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Responsive design amélioré */
+        @media (max-width: 768px) {
+            .mobile-hidden { display: none; }
+            .mobile-menu { display: block; }
+        }
+
+        @media (min-width: 769px) {
+            .mobile-menu { display: none; }
+        }
+    

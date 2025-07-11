@@ -1,0 +1,31 @@
+<div class="max-w-5xl mx-auto px-4 py-12">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+    <!-- Image produit -->
+    <div id="product-image"
+         class="h-96 bg-gradient-to-br from-green-400 to-green-600 rounded-lg flex items-center justify-center">
+      <i class="fas fa-carrot text-white text-8xl"></i>
+    </div>
+
+    <!-- Infos produit -->
+    <div>
+      <h2 id="product-name" class="text-3xl font-bold text-nnam-brown mb-4">{{ product?.nomProduit }}</h2>
+      <p class="text-gray-700 mb-2"><strong>Prix :</strong> <span class="text-nnam-orange">{{ product?.prixU }} FCFA/kg</span></p>
+      <p class="text-gray-700 mb-6"><strong>Stock disponible :</strong> {{ product?.stock?.quantiteStock }} kg</p>
+
+      <!-- Quantité et bouton -->
+      <div class="flex items-center gap-4">
+        <label for="quantity-input" class="text-gray-700">Quantité :</label>
+        <div class="flex items-center border rounded px-2">
+          <button (click)="decreaseQuantity()" class="px-2 text-nnam-orange text-xl">-</button>
+          <input id="quantity-input" type="number" min="1" [(ngModel)]="quantity" class="w-12 text-center outline-none" />
+          <button (click)="increaseQuantity()" class="px-2 text-nnam-orange text-xl">+</button>
+        </div>
+        <button (click)="addToCartFromDetail()"
+                class="bg-nnam-green text-white px-4 py-2 rounded hover:bg-green-600 transition">
+          Ajouter au panier
+        </button>
+      </div>
+      <div *ngIf="message" class="text-green-500 mt-4">{{ message }}</div>
+    </div>
+  </div>
+</div>

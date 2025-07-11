@@ -1,0 +1,15 @@
+:root {
+  --nnam-brown: #6D4C41;
+  --nnam-light-brown: #8D6E63;
+  --nnam-green: #4CAF50;
+  --nnam-orange: #FF9800;
+  --nnam-white: #FFFFFF;
+  --nnam-light-gray: #F5F5F5;
+}
+.bg-nnam-brown { background-color: var(--nnam-brown) !important; }
+.bg-nnam-light-brown { background-color: var(--nnam-light-brown) !important; }
+.bg-nnam-green { background-color: var(--nnam-green) !important; }
+.bg-nnam-orange { background-color: var(--nnam-orange) !important; }
+.text-nnam-brown { color: var(--nnam-brown) !important; }
+.text-nnam-green { color: var(--nnam-green) !important; }
+.text-nnam-orange { color: var(--nnam-orange) !important; }

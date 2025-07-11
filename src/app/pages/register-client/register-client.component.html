@@ -1,0 +1,80 @@
+<div class="container mt-4">
+  <h2 class="text-primary text-center mb-4">Inscription Client</h2>
+
+  <form (ngSubmit)="register()" #formRef="ngForm" novalidate>
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label>Prénom</label>
+        <input class="form-control" [(ngModel)]="client.prenomUtilisateur" name="prenomUtilisateur" required #prenom="ngModel" />
+        <div *ngIf="prenom.invalid && prenom.touched" class="text-danger">Prénom requis</div>
+      </div>
+      <div class="col-md-6">
+        <label>Nom</label>
+        <input class="form-control" [(ngModel)]="client.nomUtilisateur" name="nomUtilisateur" required #nom="ngModel" />
+        <div *ngIf="nom.invalid && nom.touched" class="text-danger">Nom requis</div>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label>Date de naissance</label>
+        <input type="date" class="form-control" [(ngModel)]="client.dateNaissance" name="dateNaissance" required #dateNaissance="ngModel" />
+        <div *ngIf="dateNaissance.invalid && dateNaissance.touched" class="text-danger">Date de naissance requise</div>
+      </div>
+      <div class="col-md-6">
+        <label>Lieu de naissance</label>
+        <input class="form-control" [(ngModel)]="client.lieuNaissance" name="lieuNaissance" required #lieuNaissance="ngModel" />
+        <div *ngIf="lieuNaissance.invalid && lieuNaissance.touched" class="text-danger">Lieu de naissance requis</div>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label>Ville actuelle</label>
+        <input class="form-control" [(ngModel)]="client.villeActuelle" name="villeActuelle" required #villeActuelle="ngModel" />
+        <div *ngIf="villeActuelle.invalid && villeActuelle.touched" class="text-danger">Ville requise</div>
+      </div>
+      <div class="col-md-6">
+        <label>Quartier</label>
+        <input class="form-control" [(ngModel)]="client.quartier" name="quartier" required #quartier="ngModel" />
+        <div *ngIf="quartier.invalid && quartier.touched" class="text-danger">Quartier requis</div>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label>Boîte postale</label>
+      <input class="form-control" [(ngModel)]="client.boitePostale" name="boitePostale" required #boitePostale="ngModel" />
+      <div *ngIf="boitePostale.invalid && boitePostale.touched" class="text-danger">Boîte postale requise</div>
+    </div>
+
+    <div class="mb-3">
+      <label>Email</label>
+      <input type="email" class="form-control" [(ngModel)]="client.email" name="email" required email #email="ngModel" />
+      <div *ngIf="email.invalid && email.touched" class="text-danger">
+        <div *ngIf="email.errors?.['required']">Email requis</div>
+        <div *ngIf="email.errors?.['email']">Email invalide</div>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label>Mot de passe</label>
+      <input type="password" class="form-control" [(ngModel)]="client.motDePasse" name="motDePasse" required minlength="6" #motDePasse="ngModel" />
+      <div *ngIf="motDePasse.invalid && motDePasse.touched" class="text-danger">
+        <div *ngIf="motDePasse.errors?.['required']">Mot de passe requis</div>
+        <div *ngIf="motDePasse.errors?.['minlength']">Minimum 6 caractères</div>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label>Adresse de livraison</label>
+      <input class="form-control" [(ngModel)]="client.adresseLivraison" name="adresseLivraison" required #adresseLivraison="ngModel" />
+      <div *ngIf="adresseLivraison.invalid && adresseLivraison.touched" class="text-danger">Adresse de livraison requise</div>
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100" [disabled]="formRef.invalid">
+      <i class="fas fa-user-plus me-2"></i>S'inscrire
+    </button>
+
+    <div *ngIf="message" class="alert alert-danger mt-3">{{ message }}</div>
+  </form>
+</div>

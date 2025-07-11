@@ -1,0 +1,95 @@
+<div class="container mt-4">
+  <h2 class="text-success text-center mb-4">Inscription Agriculteur</h2>
+
+  <form (ngSubmit)="register()" #formRef="ngForm" novalidate>
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label>Prénom</label>
+        <input class="form-control" [(ngModel)]="agriculteur.prenomUtilisateur" name="prenomUtilisateur" required #prenom="ngModel" />
+        <div *ngIf="prenom.invalid && prenom.touched" class="text-danger">Prénom requis</div>
+      </div>
+      <div class="col-md-6">
+        <label>Nom</label>
+        <input class="form-control" [(ngModel)]="agriculteur.nomUtilisateur" name="nomUtilisateur" required #nom="ngModel" />
+        <div *ngIf="nom.invalid && nom.touched" class="text-danger">Nom requis</div>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label>Date de naissance</label>
+        <input type="date" class="form-control" [(ngModel)]="agriculteur.dateNaissance" name="dateNaissance" required #dateNaissance="ngModel" />
+        <div *ngIf="dateNaissance.invalid && dateNaissance.touched" class="text-danger">Date de naissance requise</div>
+      </div>
+      <div class="col-md-6">
+        <label>Lieu de naissance</label>
+        <input class="form-control" [(ngModel)]="agriculteur.lieuNaissance" name="lieuNaissance" required #lieuNaissance="ngModel" />
+        <div *ngIf="lieuNaissance.invalid && lieuNaissance.touched" class="text-danger">Lieu de naissance requis</div>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label>Ville actuelle</label>
+        <input class="form-control" [(ngModel)]="agriculteur.villeActuelle" name="villeActuelle" required #villeActuelle="ngModel" />
+        <div *ngIf="villeActuelle.invalid && villeActuelle.touched" class="text-danger">Ville requise</div>
+      </div>
+      <div class="col-md-6">
+        <label>Quartier</label>
+        <input class="form-control" [(ngModel)]="agriculteur.quartier" name="quartier" required #quartier="ngModel" />
+        <div *ngIf="quartier.invalid && quartier.touched" class="text-danger">Quartier requis</div>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label>Boîte postale</label>
+      <input class="form-control" [(ngModel)]="agriculteur.boitePostale" name="boitePostale" required #boitePostale="ngModel" />
+      <div *ngIf="boitePostale.invalid && boitePostale.touched" class="text-danger">Boîte postale requise</div>
+    </div>
+
+    <div class="mb-3">
+      <label>Email</label>
+      <input type="email" class="form-control" [(ngModel)]="agriculteur.email" name="email" required email #email="ngModel" />
+      <div *ngIf="email.invalid && email.touched" class="text-danger">
+        <div *ngIf="email.errors?.['required']">Email requis</div>
+        <div *ngIf="email.errors?.['email']">Email invalide</div>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label>Mot de passe</label>
+      <input type="password" class="form-control" [(ngModel)]="agriculteur.motDePasse" name="motDePasse" required minlength="6" #motDePasse="ngModel" />
+      <div *ngIf="motDePasse.invalid && motDePasse.touched" class="text-danger">
+        <div *ngIf="motDePasse.errors?.['required']">Mot de passe requis</div>
+        <div *ngIf="motDePasse.errors?.['minlength']">Minimum 6 caractères</div>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label>Localisation de la ferme</label>
+      <input class="form-control" [(ngModel)]="agriculteur.localisationFerme" name="localisationFerme" required #localisationFerme="ngModel" />
+      <div *ngIf="localisationFerme.invalid && localisationFerme.touched" class="text-danger">Localisation requise</div>
+    </div>
+
+    <div class="mb-3">
+      <label>Superficie (hectares)</label>
+      <input type="number" class="form-control" [(ngModel)]="agriculteur.superficie" name="superficie" required min="0.1" #superficie="ngModel" />
+      <div *ngIf="superficie.invalid && superficie.touched" class="text-danger">
+        <div *ngIf="superficie.errors?.['required']">Superficie requise</div>
+        <div *ngIf="superficie.errors?.['min']">Doit être supérieur à 0</div>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label>Types de cultures</label>
+      <textarea class="form-control" [(ngModel)]="agriculteur.cultures" name="cultures" rows="2" required #cultures="ngModel"></textarea>
+      <div *ngIf="cultures.invalid && cultures.touched" class="text-danger">Ce champ est requis</div>
+    </div>
+
+    <button type="submit" class="btn btn-success w-100" [disabled]="formRef.invalid">
+      <i class="fas fa-user-plus me-2"></i>S'inscrire
+    </button>
+
+    <div *ngIf="message" class="alert alert-danger mt-3">{{ message }}</div>
+  </form>
+</div>

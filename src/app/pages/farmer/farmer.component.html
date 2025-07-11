@@ -1,0 +1,58 @@
+<!-- pages/farmer/farmer.component.html -->
+<div class="max-w-7xl mx-auto px-4 py-10">
+  <h2 class="text-3xl font-bold text-nnam-brown mb-6">Espace Agriculteur</h2>
+
+  <!-- Formulaire d'ajout de produit -->
+  <form (submit)="ajouterProduit()" id="add-product-form" class="bg-white p-6 rounded shadow-md space-y-4">
+    <h3 class="text-xl font-semibold text-nnam-green">Ajouter un produit</h3>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label class="block mb-1 text-sm font-medium text-gray-700">Nom du produit</label>
+        <input type="text" [(ngModel)]="nouveauProduit.nom" name="nom" required class="form-input w-full px-3 py-2 border rounded" />
+      </div>
+
+      <div>
+        <label class="block mb-1 text-sm font-medium text-gray-700">Prix (FCFA/kg)</label>
+        <input type="number" [(ngModel)]="nouveauProduit.prix" name="prix" required class="form-input w-full px-3 py-2 border rounded" />
+      </div>
+
+      <div>
+        <label class="block mb-1 text-sm font-medium text-gray-700">Stock disponible (kg)</label>
+        <input type="number" [(ngModel)]="nouveauProduit.stock" name="stock" required class="form-input w-full px-3 py-2 border rounded" />
+      </div>
+
+      <div>
+        <label class="block mb-1 text-sm font-medium text-gray-700">Catégorie</label>
+        <select [(ngModel)]="nouveauProduit.categorie" name="categorie" class="form-input w-full px-3 py-2 border rounded">
+          <option value="tubercules">Tubercules</option>
+          <option value="cereales">Céréales</option>
+          <option value="fruits">Fruits</option>
+          <option value="legumes">Légumes</option>
+          <option value="epices">Épices</option>
+        </select>
+      </div>
+    </div>
+
+    <button type="submit" class="bg-nnam-green text-white px-4 py-2 rounded hover:bg-green-600">Ajouter</button>
+  </form>
+
+  <!-- Liste des produits ajoutés -->
+  <div class="mt-10">
+    <h3 class="text-xl font-semibold text-nnam-orange mb-4">Mes produits</h3>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div *ngFor="let p of produits" class="bg-white p-4 rounded shadow-md">
+        <div class="flex justify-between items-center mb-2">
+          <h4 class="font-semibold text-nnam-brown">{{ p.nom }}</h4>
+          <span class="text-nnam-orange font-bold">{{ p.prix }} FCFA/kg</span>
+        </div>
+        <p class="text-sm text-gray-600">Stock : {{ p.stock }} kg</p>
+        <p class="text-sm text-gray-600">Catégorie : {{ p.categorie }}</p>
+        <div class="mt-4 flex gap-2">
+          <button class="bg-yellow-500 text-white px-3 py-1 rounded" (click)="modifierProduit(p.id)">Modifier</button>
+          <button class="bg-red-500 text-white px-3 py-1 rounded" (click)="supprimerProduit(p.id)">Supprimer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,74 @@
+<div id="home-page" class="page active">
+
+  <!-- ✅ Carousel -->
+  <div class="carousel-hero">
+    <div *ngFor="let slide of slides; let i = index"
+         class="carousel-slide"
+         [class.active]="i === currentSlide">
+      <img [src]="slide.image" [alt]="slide.title">
+      <div class="overlay">
+        <div class="text-container">
+          <h1>{{ slide.title }}</h1>
+          <p>{{ slide.subtitle }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ✅ Produits -->
+  <section class="main-products">
+    <h2>Nos Produits</h2>
+    <div class="products-row">
+      <div *ngFor="let produit of produits" class="product-card" (click)="showProductDetail(produit.id)">
+        <div class="pc-icon-section">
+          <img [src]="produit.imageUrl" [alt]="produit.nom" (error)="onImageError($event, produit)">
+        </div>
+        <div class="pc-content-section">
+          <b>{{ produit.nom }}</b>
+          <p>{{ produit.description }}</p>
+          <div class="pc-price">{{ produit.prix }} FCFA/kg</div>
+        </div>
+        <button class="add-cart" (click)="addToCart($event, produit.id)">Ajouter au panier</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ✅ Footer -->
+  <footer class="site-footer">
+    <div class="footer-cols">
+      <div>
+        <h4>Liens utiles</h4>
+        <ul>
+          <li><a href="#">Accueil</a></li>
+          <li><a href="#">Produits</a></li>
+          <li><a href="#">À propos</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Informations</h4>
+        <ul>
+          <li><a href="#">CGU</a></li>
+          <li><a href="#">Confidentialité</a></li>
+          <li><a href="#">Livraison</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Newsletter</h4>
+        <form class="newsletter-form">
+          <input type="email" placeholder="Votre email">
+          <button type="submit">OK</button>
+        </form>
+        <div class="footer-socials">
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="copyright">
+      &copy; 2025 Nnam. Tous droits réservés.
+    </div>
+  </footer>
+
+</div>

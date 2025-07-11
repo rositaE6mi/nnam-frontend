@@ -1,0 +1,139 @@
+<h2>Gestion des Produits</h2>
+
+<h3>Ajouter un Produit</h3>
+
+<form (ngSubmit)="ajouterProduit()">
+  <label>Nom</label>
+  <input
+    type="text"
+    [(ngModel)]="nouveauProduit.nomProduit"
+    name="nomProduitAjout"
+    required/>
+
+  <label>Description</label>
+  <input
+    type="text"
+    [(ngModel)]="nouveauProduit.description"
+    name="descriptionAjout"
+    required/>
+
+  <label>Prix (FCFA)</label>
+  <input
+    type="number"
+    [(ngModel)]="nouveauProduit.prixU"
+    name="prixUAjout"
+    required/>
+
+  <label>Quantité en stock (kg)</label>
+  <input
+    type="number"
+    [(ngModel)]="nouveauProduit.stock.quantiteStock"
+    name="quantiteAjout"
+    required/>
+
+  <label>Date d'expiration</label>
+  <input
+    type="date"
+    [(ngModel)]="nouveauProduit.dateExpiration"
+    name="dateExpAjout"
+    required/>
+
+  <label>Catégorie</label>
+  <select
+    [(ngModel)]="nouveauProduit.categorieId"
+    name="categorieIdAjout">
+    <option *ngFor="let cat of categories" [value]="cat.idCat">
+      {{ cat.nomCat }}
+    </option>
+  </select>
+
+  <button>Ajouter</button>
+</form>
+
+<hr />
+
+<h3>Modifier un Produit</h3>
+
+<form *ngIf="isEditing" (ngSubmit)="sauvegarderProduit()">
+  <label>Nom</label>
+  <input
+    type="text"
+    [(ngModel)]="produitEnCours.nomProduit"
+    name="nomProduitEdit"
+    required/>
+
+  <label>Description</label>
+  <input
+    type="text"
+    [(ngModel)]="produitEnCours.description"
+    name="descriptionEdit"
+    required/>
+
+  <label>Prix (FCFA)</label>
+  <input
+    type="number"
+    [(ngModel)]="produitEnCours.prixU"
+    name="prixUEdit"
+    required/>
+
+  <label>Quantité en stock (kg)</label>
+  <input
+    type="number"
+    [(ngModel)]="produitEnCours.stock.quantiteStock"
+    name="quantiteEdit"
+    required/>
+
+  <label>Date d'expiration</label>
+  <input
+    type="date"
+    [(ngModel)]="produitEnCours.dateExpiration"
+    name="dateExpEdit"
+    required/>
+
+  <label>Catégorie</label>
+  <select
+    [(ngModel)]="produitEnCours.categorieId"
+    name="categorieIdEdit">
+    <option *ngFor="let cat of categories" [value]="cat.idCat">
+      {{ cat.nomCat }}
+    </option>
+  </select>
+
+  <button>Enregistrer les modifications</button>
+  <button type="button" (click)="annulerModification()">Annuler</button>
+</form>
+
+<hr />
+
+<h3>Liste des Produits</h3>
+
+<table *ngIf="produits.length">
+  <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Description</th>
+      <th>Prix</th>
+      <th>Date d'expiration</th>
+      <th>Catégorie</th>
+      <th>Stock</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let p of produits">
+      <td>{{ p.nomProduit }}</td>
+      <td>{{ p.description }}</td>
+      <td>{{ p.prixU }}</td>
+      <td>{{ p.dateExpiration | date:'shortDate' }}</td>
+      <td>{{ p.categorieId }}</td>
+      <td>{{ p.stock.quantiteStock }}</td>
+      <td>
+        <button (click)="lancerModification(p)">Modifier</button>
+        <button (click)="supprimerProduit(p.idProduit)">Supprimer</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<p *ngIf="!produits.length">Aucun produit</p>
+

@@ -1,0 +1,46 @@
+<div class="max-w-4xl mx-auto p-6">
+  <h2 class="text-2xl font-bold text-nnam-brown mb-6">Votre Panier</h2>
+
+  <div *ngIf="produits.length > 0; else vide">
+    <table class="w-full table-auto bg-white shadow rounded overflow-hidden">
+      <thead class="bg-nnam-light-brown text-white">
+        <tr>
+          <th class="p-3 text-left">Produit</th>
+          <th class="p-3 text-center">Quantité</th>
+          <th class="p-3 text-right">Prix</th>
+          <th class="p-3 text-right">Total</th>
+          <th class="p-3 text-center">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let produit of produits; let i = index" class="border-b">
+          <td class="p-3">{{ produit.nom }}</td>
+          <td class="p-3 text-center">{{ produit.quantite }}</td>
+          <td class="p-3 text-right">{{ produit.prix }} FCFA</td>
+          <td class="p-3 text-right">{{ produit.prix * produit.quantite }} FCFA</td>
+          <td class="p-3 text-center">
+            <button (click)="supprimer(i)"
+              class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 transition">
+              Supprimer
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="text-right mt-4 text-lg font-semibold">
+      Total : <span class="text-nnam-orange">{{ calculerTotal() }} FCFA</span>
+    </div>
+
+    <div class="text-right mt-4">
+      <button (click)="validerCommande()"
+        class="bg-nnam-green text-white px-6 py-2 rounded hover:bg-green-600 transition">
+        Valider la commande
+      </button>
+    </div>
+  </div>
+
+  <ng-template #vide>
+    <p class="text-gray-600 text-center mt-10">Votre panier est vide.</p>
+  </ng-template>
+</div>
