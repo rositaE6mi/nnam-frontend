@@ -15,9 +15,9 @@
     </div>
   </div>
 
-  <!-- ✅ Produits -->
+  <!-- ✅ Nos produits phares -->
   <section class="main-products">
-    <h2>Nos Produits</h2>
+    <h2>Nos Produits Phares</h2>
     <div class="products-row">
       <div *ngFor="let produit of produits" class="product-card" (click)="showProductDetail(produit.id)">
         <div class="pc-icon-section">
@@ -28,7 +28,35 @@
           <p>{{ produit.description }}</p>
           <div class="pc-price">{{ produit.prix }} FCFA/kg</div>
         </div>
-        <button class="add-cart" (click)="addToCart($event, produit.id)">Ajouter au panier</button>
+        <button class="add-cart" (click)="addToCart($event, produit.id)">Ajouter</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ✅ Pourquoi Choisir Local -->
+  <section class="why-local">
+    <h2>Pourquoi Choisir Local ?</h2>
+    <div class="why-row">
+      <div class="why-card">
+        <div class="why-icon">
+          <i class="fas fa-seedling"></i>
+        </div>
+        <h4>Produits Frais</h4>
+        <p>Récoltés à maturité pour un goût et une qualité nutritionnelle supérieurs.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">
+          <i class="fas fa-heart"></i>
+        </div>
+        <h4>Soutien Équitable</h4>
+        <p>Chaque achat contribue directement à la rémunération de nos producteurs.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">
+          <i class="fas fa-recycle"></i>
+        </div>
+        <h4>Respect de l'Environnement</h4>
+        <p>Moins de transport, moins d'empreinte carbone, plus de durabilité.</p>
       </div>
     </div>
   </section>
