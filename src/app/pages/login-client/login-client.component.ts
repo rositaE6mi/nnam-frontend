@@ -9,6 +9,7 @@ import { AuthService } from '../../core/services/auth.service';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './login-client.component.html',
+  styleUrls: ['./login-client.component.css']
 })
 export class LoginClientComponent {
   credentials = { email: '', password: '' };
@@ -35,4 +36,15 @@ export class LoginClientComponent {
     }
     this.errorMessage = 'Email ou mot de passe invalide.';
   }
+
+  /*motDePasseOublie(): void {
+    // Redirection vers la page mot de passe oublié
+    alert('Redirection vers la page de réinitialisation de mot de passe');
+    // this.router.navigate(['/client-reset-password']);
+  }
+
+  /*allerVersInscription(): void {
+    // Redirection vers la page de création de compte
+    this.router.navigate(['/register-client']);
+  }*/
 }
