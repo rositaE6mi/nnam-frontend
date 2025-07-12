@@ -46,8 +46,8 @@ export class LoginAgriculteurComponent {
     });
   }
 
-  /*motDePasseOublie(): void {
+  motDePasseOublie(): void {
     alert('Redirection vers la page de réinitialisation du mot de passe');
     // this.router.navigate(['/agriculteur-reset-password']);
-  }*/
+  }
 }

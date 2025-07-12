@@ -37,14 +37,14 @@ export class LoginClientComponent {
     this.errorMessage = 'Email ou mot de passe invalide.';
   }
 
-  /*motDePasseOublie(): void {
+  motDePasseOublie(): void {
     // Redirection vers la page mot de passe oublié
     alert('Redirection vers la page de réinitialisation de mot de passe');
     // this.router.navigate(['/client-reset-password']);
   }
 
-  /*allerVersInscription(): void {
+  allerVersInscription(): void {
     // Redirection vers la page de création de compte
     this.router.navigate(['/register-client']);
-  }*/
+  }
 }
