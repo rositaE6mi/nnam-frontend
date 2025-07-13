@@ -1,30 +1,91 @@
-<div class="max-w-5xl mx-auto px-4 py-12">
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-    <!-- Image produit -->
-    <div id="product-image"
-         class="h-96 bg-gradient-to-br from-green-400 to-green-600 rounded-lg flex items-center justify-center">
-      <i class="fas fa-carrot text-white text-8xl"></i>
+<div class="max-w-7xl mx-auto px-4 py-12 animate-slide-in">
+  <!-- ← Breadcrumb et navigation précédente/suivante (optionnel) -->
+  <div class="flex justify-between text-gray-500 text-sm mb-4">
+    <a (click)="goBack()" class="hover:underline cursor-pointer">← Précédent</a>
+    <a (click)="goNext()" class="hover:underline cursor-pointer">Suivant →</a>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <!-- IMAGE DU PRODUIT -->
+    <div>
+      <div class="h-96 rounded-lg overflow-hidden">
+        <img *ngIf="product?.imageUrl"
+             [attr.src]="product?.imageUrl"
+             alt="{{ product?.nomProduit }}"
+             class="w-full h-full object-cover" />
+        <div *ngIf="!product?.imageUrl"
+             class="h-full w-full bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center">
+          <i class="fas fa-carrot text-white text-8xl"></i>
+        </div>
+      </div>
     </div>
 
-    <!-- Infos produit -->
+    <!-- INFOS & ACTIONS -->
     <div>
-      <h2 id="product-name" class="text-3xl font-bold text-nnam-brown mb-4">{{ product?.nomProduit }}</h2>
-      <p class="text-gray-700 mb-2"><strong>Prix :</strong> <span class="text-nnam-orange">{{ product?.prixU }} FCFA/kg</span></p>
-      <p class="text-gray-700 mb-6"><strong>Stock disponible :</strong> {{ product?.stock?.quantiteStock }} kg</p>
+      <h1 class="text-3xl font-bold text-nnam-brown mb-2">{{ product?.nomProduit }}</h1>
+      
+      <div class="text-2xl font-bold text-nnam-orange mb-4">
+        {{ product?.prixU | number:'1.0-0' }} FCFA<span class="text-lg text-gray-600">/kg</span>
+      </div>
 
-      <!-- Quantité et bouton -->
-      <div class="flex items-center gap-4">
-        <label for="quantity-input" class="text-gray-700">Quantité :</label>
-        <div class="flex items-center border rounded px-2">
-          <button (click)="decreaseQuantity()" class="px-2 text-nnam-orange text-xl">-</button>
-          <input id="quantity-input" type="number" min="1" [(ngModel)]="quantity" class="w-12 text-center outline-none" />
-          <button (click)="increaseQuantity()" class="px-2 text-nnam-orange text-xl">+</button>
-        </div>
+      <!-- Quantité et + / – -->
+      <div class="flex items-center mb-6">
+        <label class="mr-4 font-medium">Quantité (kg):</label>
+        <button class="px-3 py-1 border" (click)="decreaseQuantity()">–</button>
+        <input type="number"
+               [(ngModel)]="quantity"
+               [attr.max]="product?.stock?.quantiteStock"
+               min="1"
+               class="w-12 text-center border-t border-b" />
+        <button class="px-3 py-1 border" (click)="increaseQuantity()">+</button>
+      </div>
+
+      <!-- Boutons -->
+      <div class="flex space-x-4 mb-8">
         <button (click)="addToCartFromDetail()"
-                class="bg-nnam-green text-white px-4 py-2 rounded hover:bg-green-600 transition">
-          Ajouter au panier
+                class="flex-1 bg-nnam-green text-white py-3 rounded-lg hover:bg-green-600 transition">
+          <i class="fas fa-cart-plus mr-2"></i>Ajouter au panier
+        </button>
+        <button (click)="addToFavorites()"
+                class="bg-nnam-orange text-white p-3 rounded-lg hover:bg-orange-600 transition">
+          <i class="fas fa-heart"></i>
         </button>
       </div>
+
+      <!-- DESCRIPTION -->
+      <div class="bg-gray-50 rounded-lg p-6 mb-6">
+        <h2 class="font-semibold text-nnam-brown mb-2">Description détaillée</h2>
+        <p class="text-gray-700">{{ product?.description }}</p>
+      </div>
+
+      <!-- STOCK & DATE -->
+      <div class="grid grid-cols-2 gap-4 mb-6">
+        <div class="bg-white border rounded-lg p-4">
+          <div class="font-semibold text-nnam-green">Stock disponible</div>
+          <div class="text-2xl font-bold">{{ product?.stock?.quantiteStock }} kg</div>
+        </div>
+        <div class="bg-white border rounded-lg p-4">
+          <div class="font-semibold text-nnam-orange">Date de récolte</div>
+          <div class="text-lg font-medium">{{ product?.dateExpiration | date:'dd/MM/yyyy' }}</div>
+        </div>
+      </div>
+
+      <!-- AGRICULTEUR -->
+      <div class="border-t pt-6">
+        <h3 class="font-semibold text-nnam-brown mb-3">Informations agriculteur</h3>
+        <div class="flex items-center space-x-4">
+          <div class="w-12 h-12 bg-nnam-green rounded-full flex items-center justify-center">
+            <i class="fas fa-user text-white"></i>
+          </div>
+          <div>
+            <div class="font-medium">Jean-Baptiste Kouadio</div>
+            <div class="text-gray-600 text-sm">Fermier depuis 15 ans</div>
+            <div class="text-gray-600 text-sm">Dabou, Région d'Abidjan</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MESSAGE DE CONFIRMATION -->
       <div *ngIf="message" class="text-green-500 mt-4">{{ message }}</div>
     </div>
   </div>

@@ -11,6 +11,7 @@ export interface Produit {
     nom: string;
     quantiteStock: number;
   }
- 
+ imageUrl?: string;
+
 }
 
