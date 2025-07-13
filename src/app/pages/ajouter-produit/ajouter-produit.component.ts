@@ -15,8 +15,9 @@ import { Produit } from '../../core/models/produit.model';
   styleUrls: ['./ajouter-produit.component.css']
 })
 export class AjouterProduitComponent implements OnInit {
-  ajoutForm: any; // On initialise à undefined pour éviter l'erreur d'utilisation avant l'initialisation
+  ajoutForm: any;
   categories: Categorie[] = [];
+  previewImage: string | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -41,10 +42,21 @@ export class AjouterProduitComponent implements OnInit {
     });
   }
 
-  ajouterProduit() {
+  onImageSelected(event: Event): void {
+    const file = (event.target as HTMLInputElement)?.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.previewImage = reader.result as string;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  ajouterProduit(): void {
     if (this.ajoutForm.valid) {
       const nouveauProduit: Produit = {
-        idProduit: 0, // L'ID sera généré par le backend
+        idProduit: 0,
         nomProduit: this.ajoutForm.value.nomProduit,
         description: this.ajoutForm.value.description,
         prixU: this.ajoutForm.value.prixU,
@@ -53,7 +65,8 @@ export class AjouterProduitComponent implements OnInit {
         stock: {
           nom: 'Stock principal',
           quantiteStock: this.ajoutForm.value.quantiteStock
-        }
+        },
+        imageUrl: this.previewImage || '' // image encodée en base64
       };
 
       this.produitService.ajouterProduit(nouveauProduit).subscribe({
@@ -67,7 +80,6 @@ export class AjouterProduitComponent implements OnInit {
         }
       });
     } else {
-      // Si le formulaire n'est pas valide, afficher un message d'erreur
       alert("Veuillez remplir tous les champs obligatoires et corriger les erreurs.");
     }
   }

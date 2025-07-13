@@ -43,7 +43,7 @@ export const routes: Routes = [
 {path:'ajouter-produit', component: AjouterProduitComponent},
 {path:'liste-produits', component: ListeProduitsComponent},
 {path:'modifier-produit/:id', component: ModifierProduitComponent},
-{path:'product-detail/:id', component: ProductDetailComponent},
+{path:'produit/:id', component: ProductDetailComponent},
 {path:'admin-dashboard', component: AdminDashboardComponent },
 {path:'login-admin', component: LoginAdminComponent },
 {path: 'client/profile', component: ClientProfileComponent},

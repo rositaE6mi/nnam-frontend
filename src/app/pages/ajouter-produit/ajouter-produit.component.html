@@ -98,6 +98,16 @@
         />
       </div>
 
+      <!-- Champ de téléchargement d'image -->
+<div>
+  <label class="block text-sm font-semibold">Image du Produit</label>
+  <input type="file" (change)="onImageSelected($event)" accept="image/*" class="form-input w-full" />
+  <div *ngIf="previewImage" class="mt-2">
+    <img [src]="previewImage" alt="Aperçu" class="w-32 h-32 object-cover rounded">
+  </div>
+</div>
+
+
       <button 
         type="submit" 
         class="w-full bg-nnam-green text-gray-50 py-2 rounded font-semibold disabled:bg-gray-400 disabled:cursor-not-allowed" 
