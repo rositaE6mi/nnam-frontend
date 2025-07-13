@@ -20,17 +20,23 @@ export class LoginAdminComponent {
     private router: Router
   ) {}
 
-  login(): void {
-    this.authService.loginAdmin(this.email, this.motDePasse).subscribe(
-      (response: any) => {
-        localStorage.setItem('userType', 'admin');
+login(): void {
+  this.authService.loginAdmin(this.email, this.motDePasse).subscribe(
+    (role: string) => {
+      if (role === 'ADMIN') {
+        this.authService.setUserType('ADMIN');
+        localStorage.setItem('token', 'fake-admin-token'); // à remplacer plus tard par JWT
         this.router.navigate(['/admin-dashboard']);
-      },
-      (error: any) => {
-        alert('Identifiants incorrects');
+      } else {
+        alert('Vous n’êtes pas administrateur.');
       }
-    );
-  }
+    },
+    (error: any) => {
+      alert('Identifiants incorrects');
+    }
+  );
+}
+
 
   motDePasseOublie(): void {
     // TODO: Implémente la logique de redirection ou ouverture de modale ici

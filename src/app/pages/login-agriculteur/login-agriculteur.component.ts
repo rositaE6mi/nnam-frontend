@@ -27,17 +27,12 @@ export class LoginAgriculteurComponent {
   login(): void {
     this.authService.login(this.credentials.email, this.credentials.password).subscribe({
       next: (role) => {
-        if (role === 'ADMIN') {
-          this.authService.setUserType('ADMIN');
-          this.router.navigate(['/admin-dashboard']);
-        } else if (role === 'CLIENT') {
-          this.authService.setUserType('CLIENT');
-          this.router.navigate(['/client']);
-        } else if (role === 'AGRICULTEUR') {
+        if (role === 'AGRICULTEUR') {
+          localStorage.setItem('token', 'dummy-token');
           this.authService.setUserType('AGRICULTEUR');
           this.router.navigate(['/agriculteur']);
         } else {
-          this.errorMessage = 'Rôle inconnu.';
+          this.errorMessage = 'Cet utilisateur n’est pas un agriculteur.';
         }
       },
       error: () => {
@@ -48,6 +43,6 @@ export class LoginAgriculteurComponent {
 
   motDePasseOublie(): void {
     alert('Redirection vers la page de réinitialisation du mot de passe');
-    // this.router.navigate(['/agriculteur-reset-password']);
+    this.router.navigate(['/forgot-password']);
   }
 }

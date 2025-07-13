@@ -9,7 +9,7 @@ import { AuthService } from './core/services/auth.service';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, NavbarComponent, RouterOutlet, RegisterModalComponent, LoginModalComponent], 
+  imports: [CommonModule, NavbarComponent, RouterOutlet], 
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
@@ -18,14 +18,33 @@ export class AppComponent {
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  ngOnInit() {
-     const type = this.authService.getUserType();
-    if (type === 'CLIENT') {
-      this.router.navigate(['/client']);
-    } else if (type === 'AGRICULTEUR') {
-      this.router.navigate(['/agriculteur']);
-    }
+ ngOnInit() {
+  const publicRoutes = [
+    '/forgot-password',
+    '/reset-password',
+    '/register-client',
+    '/register-agriculteur',
+    '/login-client',
+    '/login-agriculteur',
+    '/login-admin'
+  ];
+
+  const currentUrl = this.router.url;
+
+  // Si la route est publique, ne redirige pas
+  if (publicRoutes.includes(currentUrl)) {
+    console.log('Page publique, pas de redirection');
+    return;
+  }
+
+  const type = this.authService.getUserType();
+  if (type === 'CLIENT') {
+    this.router.navigate(['/client']);
+  } else if (type === 'AGRICULTEUR') {
+    this.router.navigate(['/agriculteur']);
+  }
+
   console.log('HomeComponent loaded');
 }
-
 }
+

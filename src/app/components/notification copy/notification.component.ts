@@ -1,15 +1,14 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-notification-error',
+  selector: 'app-notification',
   standalone: true,
   imports: [],
-  templateUrl: './notification-error.component.html',
-  styleUrl: './notification-error.component.css'
+  templateUrl: './notification.component.html',
+  styleUrl: './notification.component.css'
 })
-export class NotificationErrorComponent {
-
-  message = '';
+export class NotificationComponent {
+message = '';
   visible = false;
 
   show(msg: string) {

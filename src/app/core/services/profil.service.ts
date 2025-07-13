@@ -9,7 +9,7 @@ import { environment } from '../../../environments/environment';
 })
 export class ProfilService {
 
-  private apiUrl = `${environment.apiUrl}/profils`; // adapte selon ton backend
+  private apiUrl = `${environment.apiUrl}/profil`; // adapte selon ton backend
 
   constructor(private http: HttpClient) { }
 
@@ -17,9 +17,10 @@ export class ProfilService {
     return this.http.get<Profil>(`${this.apiUrl}/${id}`);
   }
 
-  getProfilByUserId(userId: number): Observable<Profil> {
-    return this.http.get<Profil>(`${this.apiUrl}/utilisateur/${userId}`);
-  }
+getProfilByUserId(userId: number): Observable<Profil> {
+  return this.http.get<Profil>(`${this.apiUrl}/getByUser/${userId}`);
+}
+
 
   updateProfil(profil: Profil): Observable<Profil> {
     return this.http.put<Profil>(`${this.apiUrl}/${profil.idProfil}`, profil);

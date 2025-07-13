@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { Observable, tap, BehaviorSubject } from 'rxjs';
 import { environment } from '../../../environments/environment.prod';
 import { Client, Agriculteur } from '../models/user-register.model';
 import { Router } from '@angular/router';
@@ -8,8 +8,14 @@ import { Router } from '@angular/router';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private apiUrl = environment.apiUrl;
+  private userTypeSubject = new BehaviorSubject<'CLIENT' | 'AGRICULTEUR' | 'ADMIN' | null>(null);
+  userType$ = this.userTypeSubject.asObservable();
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router) {
+      // Au démarrage, lire dans localStorage et mettre à jour le subject
+    const savedType = localStorage.getItem('userType') as 'CLIENT' | 'AGRICULTEUR' | 'ADMIN' | null;
+    this.userTypeSubject.next(savedType);
+  }
 
   // Définir le type d'utilisateur dans le localStorage
   setUserType(type: 'CLIENT' | 'AGRICULTEUR' | 'ADMIN'): void {
@@ -42,9 +48,12 @@ export class AuthService {
     return type === 'ADMIN' || type === 'AGRICULTEUR';
   }
 
-  isAuthenticated(): boolean {
-    return this.getUserType() !== null;
-  }
+ isAuthenticated(): boolean {
+  const userType = this.getUserType();
+  const token = localStorage.getItem('token');
+  return userType !== null && token !== null;
+}
+
 
   // Déconnexion
   logout(): void {
@@ -54,10 +63,13 @@ export class AuthService {
   }
 
   // Connexion administrateur
-  loginAdmin(email: string, motDePasse: string): Observable<any> {
-    const body = { email, motDePasse };
-    return this.http.post(`${this.apiUrl}/admin/login`, body);
-  }
+loginAdmin(email: string, motDePasse: string): Observable<string> {
+  return this.http.post(`${this.apiUrl}/utilisateur/login`, null, {
+    params: { email, motDePasse },
+    responseType: 'text'
+  });
+}
+
 
   // Enregistrement client
  registerClient(data: Client): Observable<any> {
@@ -117,21 +129,78 @@ export class AuthService {
 }
 
 
-  getUserId(): number | null {
+  /*getUserId(): number | null {
     const user = localStorage.getItem('user');
     if (user) {
       const parsedUser = JSON.parse(user);
       return parsedUser.idUtilisateur || null;
     }
     return null;
+  }*/
+getUserId(): number | null {
+  const userJson = localStorage.getItem('user');
+  console.log('User JSON dans localStorage:', userJson);
+  if (!userJson) {
+    console.log('Aucun user trouvé dans localStorage');
+    return null;
   }
-login(email: string, motDePasse: string): Observable<string> {
+  try {
+    const user = JSON.parse(userJson);
+    console.log('User object:', user);
+    return user.idUtilisateur || null;
+  } catch (e) {
+    console.error('Erreur parsing user:', e);
+    return null;
+  }
+}
+
+
+  //agriculteur et client
+/*login(email: string, motDePasse: string): Observable<string> {
+  return this.http.post(`${this.apiUrl}/utilisateur/login`, null, {
+    params: { email, motDePasse },
+    responseType: 'text' // important pour dire que la réponse est du texte brut
+  });
+}*/
+
+login(email: string, motDePasse: string): Observable<any> {
   return this.http.post(`${this.apiUrl}/utilisateur/login`, null, {
     params: { email, motDePasse },
     responseType: 'text'
+  }).pipe(
+    tap((role) => {
+      if (role === 'CLIENT' || role === 'AGRICULTEUR' || role === 'ADMIN') {
+        localStorage.setItem('token', 'dummy-token'); // remplace si tu utilises un vrai token
+        this.setUserType(role as 'CLIENT' | 'AGRICULTEUR' | 'ADMIN');
+
+        // ➡️ Appel API pour récupérer et stocker les infos utilisateur après login
+        this.getUserByEmail(email).subscribe({
+          next: (user) => {
+            localStorage.setItem('user', JSON.stringify(user));
+            console.log('Utilisateur chargé et stocké:', user);
+          },
+          error: (err) => console.error('Erreur lors du getUserByEmail:', err)
+        });
+      }
+    })
+  );
+}
+
+
+
+getUserByEmail(email: string): Observable<any> {
+  return this.http.get(`${this.apiUrl}/utilisateur/getByEmail`, {
+    params: { email }
   });
 }
 
+forgotPassword(email: string): Observable<any> {
+  return this.http.post(`${this.apiUrl}/forgot-password`, { email });
+}
+
+resetPassword(token: string, newPassword: string): Observable<any> {
+  return this.http.post(`${this.apiUrl}/reset-password`, { token, newPassword });
+}
 
 
 }

@@ -27,12 +27,20 @@
 }
 
 .logo-img {
-  height: 48px;
+  height: 120px;
+  max-width: 100%;
   width: auto;
   border-radius: 8px;
   object-fit: cover;
   box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
+/*
+@media (max-width: 600px) {
+  .logo-img {
+    height: 80px; /* réduire un peu sur mobile *
+  }
+}
+*/
 
 .brand-n {
   color: #FBBC19; 
@@ -44,12 +52,6 @@
   color: #fff;
   font-size: 1.3em;
   font-weight: 600;
-}
-
-.slogan {
-  font-size: 0.75em;
-  color: #fff;
-  font-style: italic;
 }
 
 .nav-links {
