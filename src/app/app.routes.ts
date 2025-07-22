@@ -20,6 +20,7 @@ import { ClientProfileComponent } from './pages/profil-client/profil-client.comp
 import { ProfilAgriculteurComponent } from './pages/profil-agriculteur/profil-agriculteur.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
+import { RechercheComponent } from './layout/recherche/recherche.component';
 
 
 export const routes: Routes = [
@@ -50,6 +51,7 @@ export const routes: Routes = [
 {path: 'profil-agriculteur', component: ProfilAgriculteurComponent},
 {path: 'forgot-password' , component: ForgotPasswordComponent},
 {path: 'reset-password' , component : ResetPasswordComponent},
+{path: 'recherche' , component : RechercheComponent},
 
 
 

@@ -1,11 +1,11 @@
 .navbar {
-  background: #009640; /* vert principal */
+  background: #009640;
   color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 0 32px;
-  height: 76px; 
+  height: 76px;
   position: sticky;
   top: 0;
   z-index: 10;
@@ -34,16 +34,9 @@
   object-fit: cover;
   box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
-/*
-@media (max-width: 600px) {
-  .logo-img {
-    height: 80px; /* réduire un peu sur mobile *
-  }
-}
-*/
 
 .brand-n {
-  color: #FBBC19; 
+  color: #FBBC19;
   font-size: 1.5em;
   font-weight: bold;
 }
@@ -75,7 +68,7 @@
 
 .nav-links a:hover,
 .dropdown-menu a:hover {
-  background: #432918; /* brun foncé au hover */
+  background: #432918;
 }
 
 .searchbar {
@@ -118,12 +111,25 @@
   color: #432918;
   min-width: 160px;
   border-radius: 0 0 6px 6px;
-  box-shadow: 0 3px 16px rgba(90,50,10,0.13);
+  box-shadow: 0 3px 16px rgba(90, 50, 10, 0.13);
   z-index: 50;
   display: none;
+  animation: dropdown-fade 0.2s ease-in-out;
 }
 
-.dropdown:hover .dropdown-menu {
+@keyframes dropdown-fade {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Menu visible uniquement si classe open */
+.relative.open .dropdown-menu {
   display: block;
 }
 
@@ -139,6 +145,7 @@
   color: #432918;
   display: block;
   padding: 10px 16px;
+  text-decoration: none;
 }
 
 .cart {
@@ -157,8 +164,53 @@
   font-weight: bold;
 }
 
+/* Responsive */
 @media (max-width: 900px) {
-  .navbar { flex-direction: column; height: auto; }
-  .nav-links { flex-direction: column; align-items: flex-start; width: 100%; }
-  .nav-links li { width: 100%; }
+  .navbar {
+    flex-direction: column;
+    height: auto;
+    padding: 16px;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .nav-links li {
+    width: 100%;
+  }
+
+  .searchbar input {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    background: #009640;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 10;
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+
+  .nav-links a,
+  .nav-links button {
+    width: 100%;
+    text-align: left;
+    padding: 12px;
+  }
+
+  .logo-img {
+    height: 80px;
+  }
 }

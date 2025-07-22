@@ -1,6 +1,7 @@
 import { Stock } from './stock.model';
 
 export interface Produit {
+  [x: string]: any;
   idProduit: number;
   nomProduit: string;
   description: string;

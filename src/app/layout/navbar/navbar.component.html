@@ -1,64 +1,76 @@
 <nav class="bg-nnam-green shadow-lg sticky top-0 z-50">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between items-center h-20">
-      
+
       <!-- Logo -->
       <div class="flex items-center cursor-pointer" [routerLink]="['/']">
         <div class="mr-3">
-<img src="assets/images/logoNnam.png" alt="Logo Nnam" class="h-60 w-auto rounded-lg" />
+          <img src="assets/images/logoNnam.png" alt="Logo Nnam" class="h-60 w-auto rounded-lg" />
         </div>
-      
       </div>
 
       <!-- Navigation Links (Desktop) -->
       <div class="hidden md:flex items-center space-x-6">
-        <a routerLink="/" class="text-white nav-link">Accueil</a>
 
-        <!-- Recherche -->
-        <div class="relative">
-          <input type="text" placeholder="Rechercher..." class="px-4 py-2 rounded-lg bg-white text-gray-800 w-64" [(ngModel)]="searchQuery" (keyup.enter)="onSearch()" />
-          <i class="fas fa-search absolute right-3 top-3 text-gray-500"></i>
-        </div>
+        <a routerLink="/" class="text-white nav-link">Accueil</a>
+<!-- Barre de recherche -->
+<div class="relative searchbar-container">
+  <input
+    type="text"
+    placeholder="Rechercher un produit ou une catégorie"
+    class="px-4 py-2 rounded-lg bg-white text-gray-800 w-64 shadow"
+    [(ngModel)]="searchQuery"
+    (keyup.enter)="onSearch()" />
+
+  <i class="fas fa-search absolute right-3 top-3 text-gray-500 cursor-pointer"
+     (click)="onSearch()"></i>
+</div>
+
+
 
         <!-- Catégories Dropdown -->
-        <div class="relative">
+        <div class="relative" [class.open]="isDropdownOpen('categories')">
           <button class="text-white nav-link flex items-center" (click)="toggleDropdown('categories')">
             Catégories <i class="fas fa-chevron-down ml-1"></i>
           </button>
-          <div *ngIf="isDropdownOpen('categories')" class="absolute top-full left-0 bg-white rounded shadow-md py-2 w-48 mt-2">
-            <a *ngFor="let cat of categories" [routerLink]="['/categorie', cat.nomCat.toLowerCase()]" class="block px-4 py-2 hover:bg-gray-100">
+          <div *ngIf="isDropdownOpen('categories')" class="absolute top-full left-0 bg-white rounded shadow-md py-2 w-48 mt-2 z-50">
+            <a *ngFor="let cat of categories"
+               [routerLink]="['/categorie', cat.nomCat.toLowerCase()]"
+               class="block px-4 py-2 hover:bg-gray-100"
+               (click)="fermerDropdown()">
               {{ cat.nomCat }}
             </a>
           </div>
         </div>
 
-        <!-- Authentification / Inscription -->
+        <!-- Auth -->
         <ng-container *ngIf="!userType">
-          <!-- S'inscrire -->
-          <div class="relative">
+
+          <!-- S'inscrire Dropdown -->
+          <div class="relative" [class.open]="isDropdownOpen('register')">
             <button class="text-white nav-link flex items-center" (click)="toggleDropdown('register')">
               S'inscrire <i class="fas fa-chevron-down ml-1"></i>
             </button>
-            <div *ngIf="isDropdownOpen('register')" class="absolute top-full left-0 bg-white rounded-lg shadow-lg py-2 w-48 mt-2">
-              <a class="block px-4 py-2 hover:bg-gray-100" routerLink="/register-agriculteur">Agriculteur</a>
-              <a class="block px-4 py-2 hover:bg-gray-100" routerLink="/register-client">Client</a>
+            <div *ngIf="isDropdownOpen('register')" class="absolute top-full left-0 bg-white rounded shadow-lg py-2 w-48 mt-2 z-50">
+              <a routerLink="/register-agriculteur" class="block px-4 py-2 hover:bg-gray-100" (click)="fermerDropdown()">Agriculteur</a>
+              <a routerLink="/register-client" class="block px-4 py-2 hover:bg-gray-100" (click)="fermerDropdown()">Client</a>
             </div>
           </div>
 
-          <!-- Se connecter -->
-          <div class="relative">
+          <!-- Se connecter Dropdown -->
+          <div class="relative" [class.open]="isDropdownOpen('login')">
             <button class="text-white nav-link flex items-center" (click)="toggleDropdown('login')">
               Se connecter <i class="fas fa-chevron-down ml-1"></i>
             </button>
-            <div *ngIf="isDropdownOpen('login')" class="absolute top-full left-0 bg-white rounded-lg shadow-lg py-2 w-48 mt-2">
-              <a class="block px-4 py-2 hover:bg-gray-100" routerLink="/login-agriculteur">Agriculteur</a>
-              <a class="block px-4 py-2 hover:bg-gray-100" routerLink="/login-client">Client</a>
-              <a class="block px-4 py-2 hover:bg-gray-100" routerLink="/login-admin">Administrateur</a>
+            <div *ngIf="isDropdownOpen('login')" class="absolute top-full left-0 bg-white rounded shadow-lg py-2 w-48 mt-2 z-50">
+              <a routerLink="/login-agriculteur" class="block px-4 py-2 hover:bg-gray-100" (click)="fermerDropdown()">Agriculteur</a>
+              <a routerLink="/login-client" class="block px-4 py-2 hover:bg-gray-100" (click)="fermerDropdown()">Client</a>
+              <a routerLink="/login-admin" class="block px-4 py-2 hover:bg-gray-100" (click)="fermerDropdown()">Administrateur</a>
             </div>
           </div>
         </ng-container>
 
-        <!-- Espace personnel + Déconnexion -->
+        <!-- Utilisateur connecté -->
         <ng-container *ngIf="userType">
           <a *ngIf="userType === 'CLIENT'" routerLink="/client" class="text-white nav-link">Mon Espace Client</a>
           <a *ngIf="userType === 'AGRICULTEUR'" routerLink="/agriculteur" class="text-white nav-link">Mon Espace Agriculteur</a>
@@ -69,11 +81,13 @@
         <!-- Panier -->
         <a routerLink="/panier" class="relative text-white">
           <i class="fas fa-shopping-cart text-xl"></i>
-          <span class="absolute -top-2 -right-2 bg-nnam-orange text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">{{ itemCount$ | async }}</span>
+          <span class="absolute -top-2 -right-2 bg-nnam-orange text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
+            {{ itemCount$ | async }}
+          </span>
         </a>
       </div>
 
-      <!-- Mobile menu button -->
+      <!-- Menu mobile -->
       <div class="md:hidden flex items-center">
         <button class="text-white text-2xl focus:outline-none" (click)="toggleMobileMenu()">
           <i class="fas fa-bars"></i>
@@ -83,23 +97,25 @@
 
     <!-- Mobile Menu -->
     <div *ngIf="mobileMenuOpen" class="md:hidden bg-nnam-green px-2 pt-2 pb-3 space-y-1 sm:px-3">
-      <a routerLink="/" class="text-white block px-3 py-2 rounded-md text-base font-medium">Accueil</a>
+      <a routerLink="/" class="text-white block px-3 py-2 rounded-md text-base font-medium" (click)="fermerTout()">Accueil</a>
       <div *ngFor="let cat of categories">
-        <a [routerLink]="['/categorie', cat.nomCat.toLowerCase()]" class="text-white block px-3 py-2 rounded-md text-base font-medium">{{ cat.nomCat }}</a>
+        <a [routerLink]="['/categorie', cat.nomCat.toLowerCase()]" class="text-white block px-3 py-2 rounded-md text-base font-medium" (click)="fermerTout()">{{ cat.nomCat }}</a>
       </div>
-      <a routerLink="/panier" class="text-white block px-3 py-2 rounded-md text-base font-medium">Panier</a>
+      <a routerLink="/panier" class="text-white block px-3 py-2 rounded-md text-base font-medium" (click)="fermerTout()">Panier</a>
+
       <ng-container *ngIf="!userType">
-        <a routerLink="/register-agriculteur" class="text-white block px-3 py-2 rounded-md text-base font-medium">S'inscrire (Agriculteur)</a>
-        <a routerLink="/register-client" class="text-white block px-3 py-2 rounded-md text-base font-medium">S'inscrire (Client)</a>
-        <a routerLink="/login-agriculteur" class="text-white block px-3 py-2 rounded-md text-base font-medium">Se connecter (Agriculteur)</a>
-        <a routerLink="/login-client" class="text-white block px-3 py-2 rounded-md text-base font-medium">Se connecter (Client)</a>
-        <a routerLink="/login-admin" class="text-white block px-3 py-2 rounded-md text-base font-medium">Se connecter (Administrateur)</a>
+        <a routerLink="/register-agriculteur" class="text-white block px-3 py-2" (click)="fermerTout()">S'inscrire (Agriculteur)</a>
+        <a routerLink="/register-client" class="text-white block px-3 py-2" (click)="fermerTout()">S'inscrire (Client)</a>
+        <a routerLink="/login-agriculteur" class="text-white block px-3 py-2" (click)="fermerTout()">Se connecter (Agriculteur)</a>
+        <a routerLink="/login-client" class="text-white block px-3 py-2" (click)="fermerTout()">Se connecter (Client)</a>
+        <a routerLink="/login-admin" class="text-white block px-3 py-2" (click)="fermerTout()">Se connecter (Administrateur)</a>
       </ng-container>
+
       <ng-container *ngIf="userType">
-        <a *ngIf="userType === 'CLIENT'" routerLink="/client" class="text-white block px-3 py-2 rounded-md text-base font-medium">Mon Espace Client</a>
-        <a *ngIf="userType === 'AGRICULTEUR'" routerLink="/agriculteur" class="text-white block px-3 py-2 rounded-md text-base font-medium">Mon Espace Agriculteur</a>
-        <a *ngIf="userType === 'ADMIN'" routerLink="/admin-dashboard" class="text-white block px-3 py-2 rounded-md text-base font-medium">Tableau de Bord</a>
-        <button class="text-white block px-3 py-2 rounded-md text-base font-medium text-left w-full" (click)="logout()">Déconnexion</button>
+        <a *ngIf="userType === 'CLIENT'" routerLink="/client" class="text-white block px-3 py-2" (click)="fermerTout()">Mon Espace Client</a>
+        <a *ngIf="userType === 'AGRICULTEUR'" routerLink="/agriculteur" class="text-white block px-3 py-2" (click)="fermerTout()">Mon Espace Agriculteur</a>
+        <a *ngIf="userType === 'ADMIN'" routerLink="/admin-dashboard" class="text-white block px-3 py-2" (click)="fermerTout()">Tableau de Bord</a>
+        <button class="text-white block px-3 py-2 text-left w-full" (click)="logout()">Déconnexion</button>
       </ng-container>
     </div>
   </div>
