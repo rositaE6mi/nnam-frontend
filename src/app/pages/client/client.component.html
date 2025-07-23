@@ -1,30 +1,47 @@
 <div class="max-w-7xl mx-auto px-4 py-8">
-  <!-- En-tête -->
-  <div class="bg-nnam-orange text-white rounded-lg p-6 mb-8">
-    <h1 class="text-3xl font-bold mb-2">Espace Client</h1>
-    <p class="text-orange-100">Découvrez nos produits frais et locaux</p>
+  <!-- Header profil -->
+  <div class="bg-nnam-orange text-white rounded-lg p-6 mb-8 flex flex-col md:flex-row items-center justify-between">
+    <div class="flex items-center space-x-4">
+      <!-- Photo profil -->
+      <div class="w-20 h-20 rounded-full overflow-hidden border-4 border-white">
+        <img src="https://via.placeholder.com/150" alt="Photo de profil" class="w-full h-full object-cover">
+      </div>
+
+      <!-- Infos client -->
+      <div>
+        <h2 class="text-xl font-bold">{{ client.prenomUtilisateur }} {{ client.nomUtilisateur }}</h2>
+        <p class="text-orange-100">{{ client.villeActuelle }}, {{ client.quartier }}</p>
+      </div>
+    </div>
+
+    <!-- Bouton voir profil -->
+    <div class="mt-4 md:mt-0">
+      <a routerLink="/client/profile" class="bg-white text-nnam-orange px-4 py-2 rounded shadow hover:bg-gray-100 transition">
+        Voir votre profil
+      </a>
+    </div>
   </div>
 
   <!-- Filtres -->
-<div class="bg-white rounded-lg shadow p-6 mb-8">
-  <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-    <div>
-      <label class="block text-gray-700 font-medium mb-2">Rechercher</label>
-      <input [(ngModel)]="filtreNom" type="text" class="form-input" placeholder="Nom du produit...">
-    </div>
-    <div>
-      <label class="block text-gray-700 font-medium mb-2">Catégorie</label>
-      <select [(ngModel)]="filtreCategorie" class="form-input">
-        <option value="">Toutes les catégories</option>
-        <option *ngFor="let categorie of categories" [value]="categorie.idCat">{{ categorie.nomCat }}</option>
-      </select>
-    </div>
-    <div>
-      <label class="block text-gray-700 font-medium mb-2">Prix Max (FCFA)</label>
-      <input type="number" [(ngModel)]="filtrePrix" class="form-input" placeholder="5000">
+  <div class="bg-white rounded-lg shadow p-6 mb-8">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div>
+        <label class="block text-gray-700 font-medium mb-2">Rechercher</label>
+        <input [(ngModel)]="filtreNom" type="text" class="form-input" placeholder="Nom du produit...">
+      </div>
+      <div>
+        <label class="block text-gray-700 font-medium mb-2">Catégorie</label>
+        <select [(ngModel)]="filtreCategorie" class="form-input">
+          <option value="">Toutes les catégories</option>
+          <option *ngFor="let categorie of categories" [value]="categorie.idCat">{{ categorie.nomCat }}</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-gray-700 font-medium mb-2">Prix Max (FCFA)</label>
+        <input type="number" [(ngModel)]="filtrePrix" class="form-input" placeholder="5000">
+      </div>
     </div>
   </div>
-</div>
 
   <!-- Infos panier -->
   <div class="bg-nnam-green text-white rounded-lg p-4 mb-8 flex justify-between items-center">
@@ -59,5 +76,12 @@
         </div>
       </a>
     </div>
+  </div>
+
+  <!-- Déconnexion -->
+  <div class="mt-12 text-center">
+    <button (click)="logout()" class="bg-red-500 text-white px-6 py-2 rounded shadow hover:bg-red-600 transition">
+      Déconnexion
+    </button>
   </div>
 </div>

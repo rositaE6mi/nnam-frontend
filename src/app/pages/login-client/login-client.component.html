@@ -1,20 +1,27 @@
-<div class="container mt-5">
-  <h2 class="text-primary text-center mb-4">Connexion Client</h2>
+<div class="login-container">
+  <h2 class="login-title">Connexion Client</h2>
 
-  <form (ngSubmit)="login()" #formRef="ngForm">
-    <div class="mb-3">
+  <form (ngSubmit)="login()" #formRef="ngForm" class="login-form">
+    <div class="form-group">
       <label for="email">Email</label>
       <input id="email" name="email" class="form-control" [(ngModel)]="credentials.email" type="email" required />
     </div>
 
-    <div class="mb-3">
+    <div class="form-group">
       <label for="password">Mot de passe</label>
       <input id="password" name="password" class="form-control" [(ngModel)]="credentials.password" type="password" required />
     </div>
 
     <button type="submit" class="btn btn-primary w-100">
-      <i class="fas fa-sign-in-alt me-2"></i>Se connecter
+      <i class="fas fa-sign-in-alt me-2"></i> Se connecter
     </button>
+
+    <a href="#" class="forgot-password" (click)="motDePasseOublie()">Mot de passe oublié ?</a>
+
+    <div class="signup-link">
+      Vous n'avez pas encore de compte ?
+      <a href="#" (click)="allerVersInscription()">Cliquez ici pour créer un compte.</a>
+    </div>
 
     <div *ngIf="errorMessage" class="alert alert-danger mt-3">
       {{ errorMessage }}

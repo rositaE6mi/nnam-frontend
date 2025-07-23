@@ -15,8 +15,18 @@ import { Produit } from '../../core/models/produit.model';
   styleUrls: ['./ajouter-produit.component.css']
 })
 export class AjouterProduitComponent implements OnInit {
-  ajoutForm: any; // On initialise à undefined pour éviter l'erreur d'utilisation avant l'initialisation
+  ajoutForm: any;
   categories: Categorie[] = [];
+  previewImage: string | null = null;
+
+  // Images par défaut pour proposition si pas d'image uploadée
+  defaultImages: Record<number, string> = {
+    // idCat => URL image par défaut (exemple)
+    1: 'assets/images/default-fruits.jpg',
+    2: 'assets/images/default-legumes.jpg',
+    3: 'assets/images/default-cereales.jpg',
+    // ajoute autant que nécessaire
+  };
 
   constructor(
     private fb: FormBuilder,
@@ -29,31 +39,52 @@ export class AjouterProduitComponent implements OnInit {
     this.ajoutForm = this.fb.group({
       nomProduit: ['', [Validators.required, Validators.minLength(3)]],
       description: [''],
-      prixU: [0, [Validators.required, Validators.min(0)]],
+      prixU: [null, [Validators.required, Validators.min(0)]],
       dateExpiration: [''],
-      categorieId: [0, Validators.required],
-      quantiteStock: [0, [Validators.required, Validators.min(0)]]
+      categorieId: [null, Validators.required],
+      quantiteStock: [null, [Validators.required, Validators.min(0)]]
     });
 
     this.categorieService.getAllCategories().subscribe({
       next: (data) => this.categories = data,
-      error: (err) => console.error(err)
+      error: (err) => console.error('Erreur chargement catégories', err)
     });
   }
 
-  ajouterProduit() {
+  onImageSelected(event: Event): void {
+    const file = (event.target as HTMLInputElement)?.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.previewImage = reader.result as string;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  // Appelé au submit du formulaire
+  ajouterProduit(): void {
     if (this.ajoutForm.valid) {
+      const formValues = this.ajoutForm.value;
+
+      // Si aucune image uploadée, proposer image par défaut selon catégorie
+      let imageUrl = this.previewImage;
+      if (!imageUrl && formValues.categorieId && this.defaultImages[formValues.categorieId]) {
+        imageUrl = this.defaultImages[formValues.categorieId];
+      }
+
       const nouveauProduit: Produit = {
-        idProduit: 0, // L'ID sera généré par le backend
-        nomProduit: this.ajoutForm.value.nomProduit,
-        description: this.ajoutForm.value.description,
-        prixU: this.ajoutForm.value.prixU,
-        dateExpiration: this.ajoutForm.value.dateExpiration,
-        categorieId: this.ajoutForm.value.categorieId,
+        idProduit: 0, // ou géré côté backend
+        nomProduit: formValues.nomProduit,
+        description: formValues.description,
+        prixU: formValues.prixU,
+        dateExpiration: formValues.dateExpiration,
+        categorieId: formValues.categorieId,
         stock: {
           nom: 'Stock principal',
-          quantiteStock: this.ajoutForm.value.quantiteStock
-        }
+          quantiteStock: formValues.quantiteStock
+        },
+        imageUrl: imageUrl || '' // soit base64, soit image par défaut, soit vide
       };
 
       this.produitService.ajouterProduit(nouveauProduit).subscribe({
@@ -63,12 +94,12 @@ export class AjouterProduitComponent implements OnInit {
         },
         error: (err) => {
           console.error("Erreur lors de l'ajout.", err);
-          alert("Erreur, voir console.");
+          alert("Erreur lors de l'ajout du produit. Voir console.");
         }
       });
     } else {
-      // Si le formulaire n'est pas valide, afficher un message d'erreur
       alert("Veuillez remplir tous les champs obligatoires et corriger les erreurs.");
+      this.ajoutForm.markAllAsTouched(); // affiche les erreurs
     }
   }
 }

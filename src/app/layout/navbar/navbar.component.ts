@@ -1,5 +1,4 @@
-// navbar.component.ts
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { PanierService } from '../../core/services/panier.service';
 import { AuthService } from '../../core/services/auth.service';
@@ -20,11 +19,10 @@ export class NavbarComponent implements OnInit {
   dropdownOpen: string | null = null;
   mobileMenuOpen = false;
   itemCount$!: Observable<number>;
-  userType: 'client' | 'agriculteur' | 'admin' | null = null;
+  userType: 'CLIENT' | 'AGRICULTEUR' | 'ADMIN' | null = null;
 
   categories: Categorie[] = [];
   searchQuery = '';
-  searchResults: Categorie[] = [];
 
   constructor(
     private panierService: PanierService,
@@ -37,6 +35,11 @@ export class NavbarComponent implements OnInit {
     this.itemCount$ = this.panierService.getItemCount();
     this.userType = this.authService.getUserType();
     this.chargerCategories();
+
+    // Fermer menu mobile/déroulants à chaque navigation
+    this.router.events.subscribe(() => {
+      this.fermerTout();
+    });
   }
 
   chargerCategories() {
@@ -58,18 +61,42 @@ export class NavbarComponent implements OnInit {
     this.mobileMenuOpen = !this.mobileMenuOpen;
   }
 
+  fermerDropdown(): void {
+    this.dropdownOpen = null;
+  }
+
+  fermerTout(): void {
+    this.mobileMenuOpen = false;
+    this.dropdownOpen = null;
+  }
+
   logout(): void {
     this.authService.logout();
     this.userType = null;
     this.router.navigate(['/']);
   }
 
-  onSearch(): void {
-    if (this.searchQuery.trim()) {
-      this.categorieService.searchCategories(this.searchQuery).subscribe({
-        next: (results) => this.searchResults = results,
-        error: (err) => console.error(err)
-      });
-    }
+ 
+
+onSearch(): void {
+  const query = this.searchQuery.trim();
+  if (query.length === 0) return;
+
+  this.fermerTout(); // ferme dropdown ou menu mobile
+  this.router.navigate(['/recherche'], { queryParams: { q: query } });
+}
+
+
+@HostListener('document:click', ['$event'])
+onClickOutside(event: Event): void {
+  const target = event.target as HTMLElement;
+  const clickedInsideDropdown = target.closest('.relative');
+
+  if (!clickedInsideDropdown) {
+    this.dropdownOpen = null;
   }
+
+
+
+}
 }

@@ -1,0 +1,95 @@
+<div class="hero">
+  <div class="carousel-hero">
+    <img [src]="carouselImages[currentImage].url" [alt]="carouselImages[currentImage].alt" />
+    <div class="overlay">
+      <h1>Produits Frais du Terroir</h1>
+      <p>Directement de nos agriculteurs locaux</p>
+    </div>
+  </div>
+</div>
+
+<section class="main-products">
+  <h2>Nos Produits Phares</h2>
+  <div class="products-row">
+    <div class="product-card" *ngFor="let p of productCards" [style.background]="p.color+'11'">
+      <div class="pc-icon" [style.background]="p.color">
+        <i class="fas" [ngClass]="p.icon"></i>
+      </div>
+      <div class="pc-content">
+        <b>{{p.name}}</b>
+        <p>{{p.desc}}</p>
+        <span class="pc-price" [style.color]="p.color">{{p.price}}</span>
+      </div>
+      <button class="add-cart" [style.background]="p.color"><i class="fas fa-plus"></i></button>
+    </div>
+  </div>
+</section>
+
+<section class="why-local">
+  <h2>Pourquoi Choisir Local ?</h2>
+  <div class="why-row">
+    <div class="why-card">
+      <div class="why-icon" style="background: #22b573;"><i class="fas fa-leaf"></i></div>
+      <h4>Produits Frais</h4>
+      <p>Récoltés à maturité et livrés rapidement pour préserver toutes leurs qualités nutritionnelles.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon" style="background: #ffa900;"><i class="fas fa-hand-holding-heart"></i></div>
+      <h4>Soutien Local</h4>
+      <p>Encouragez l'économie locale en achetant directement auprès de nos agriculteurs partenaires.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon" style="background: #7ee787;"><i class="fas fa-recycle"></i></div>
+      <h4>Écologique</h4>
+      <p>Réduisez votre empreinte carbone avec des produits cultivés près de chez vous.</p>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-cols">
+    <div>
+      <b>À Propos</b>
+      <ul>
+        <li>Notre Mission</li>
+        <li>Nos Valeurs</li>
+        <li>L'Équipe</li>
+        <li>Contact</li>
+      </ul>
+    </div>
+    <div>
+      <b>Liens Utiles</b>
+      <ul>
+        <li>Comment Commander</li>
+        <li>Devenir Agriculteur</li>
+        <li>Programme de Fidélité</li>
+        <li>Blog</li>
+      </ul>
+    </div>
+    <div>
+      <b>Informations</b>
+      <ul>
+        <li>Conditions d'utilisation</li>
+        <li>Politique de confidentialité</li>
+        <li>Livraison</li>
+        <li>Retours</li>
+      </ul>
+    </div>
+    <div>
+      <b>Newsletter</b>
+      <p>Restez informé de nos dernières offres et nouveautés.</p>
+      <form (submit)="$event.preventDefault()" class="newsletter-form">
+        <input type="email" placeholder="Votre email" />
+        <button><i class="fas fa-arrow-right"></i></button>
+      </form>
+      <div class="footer-socials">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-whatsapp"></i></a>
+      </div>
+    </div>
+  </div>
+  <div class="copyright">
+    © 2024 Nnam - Du champ à votre assiette. Tous droits réservés.
+  </div>
+</footer>

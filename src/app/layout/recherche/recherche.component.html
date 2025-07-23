@@ -1,0 +1,19 @@
+<div class="container mx-auto py-6 px-4">
+  <h2 class="text-2xl font-bold mb-4">Résultats pour "{{ query }}"</h2>
+
+  <div *ngIf="rienTrouve" class="text-red-500 font-semibold">
+    Aucun résultat trouvé pour "{{ query }}"
+  </div>
+
+  <div *ngIf="!rienTrouve && resultats.length > 0"
+       class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    <div *ngFor="let produit of resultats"
+         class="border rounded shadow p-4 cursor-pointer hover:shadow-lg transition"
+         (click)="goToDetail(produit.idProduit)">
+      <img *ngIf="produit.imageUrl" [src]="produit.imageUrl"
+           class="h-40 w-full object-cover mb-2" alt="{{ produit.nomProduit }}" />
+      <h3 class="font-semibold">{{ produit.nomProduit }}</h3>
+      <p class="text-gray-600">{{ produit.prixU }} FCFA</p>
+    </div>
+  </div>
+</div>

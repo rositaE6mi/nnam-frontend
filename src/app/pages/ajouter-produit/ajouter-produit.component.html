@@ -1,109 +1,130 @@
 <div class="max-w-7xl mx-auto px-4 py-8">
   <div class="bg-white rounded-lg shadow-lg p-6">
     <h2 class="text-2xl font-bold text-nnam-brown mb-4">Ajouter un Produit</h2>
-    <form [formGroup]="ajoutForm" (ngSubmit)="ajouterProduit()" class="space-y-3">
+    <form [formGroup]="ajoutForm" (ngSubmit)="ajouterProduit()" class="space-y-4" novalidate>
+      
+      <!-- Nom du Produit -->
       <div>
-        <label class="block text-sm font-semibold">Nom du Produit</label>
-        <input 
-          type="text" 
-          formControlName="nomProduit" 
-          required 
-          class="form-input w-full" 
-          placeholder="Ex: Tomates cerises bio" 
+        <label class="block text-sm font-semibold mb-1" for="nomProduit">Nom du Produit</label>
+        <input
+          id="nomProduit"
+          type="text"
+          formControlName="nomProduit"
+          placeholder="Ex: Tomates cerises bio"
+          required
+          class="form-input w-full border border-gray-300 rounded px-3 py-2"
         />
-        <div *ngIf="ajoutForm.get('nomProduit')?.errors && ajoutForm.get('nomProduit')?.touched" class="text-red-500 text-sm">
-          <div *ngIf="ajoutForm.get('nomProduit')?.errors.required">
-            Le nom du produit est requis.
-          </div>
-          <div *ngIf="ajoutForm.get('nomProduit')?.errors.minlength">
-            Le nom du produit doit contenir au moins 3 caractères.
-          </div>
+        <div *ngIf="ajoutForm.get('nomProduit')?.touched && ajoutForm.get('nomProduit')?.invalid" class="text-red-600 text-sm mt-1">
+          <div *ngIf="ajoutForm.get('nomProduit')?.errors?.['required']">Le nom du produit est requis.</div>
+          <div *ngIf="ajoutForm.get('nomProduit')?.errors?.['minlength']">Le nom doit contenir au moins 3 caractères.</div>
         </div>
       </div>
 
+      <!-- Catégorie -->
       <div>
-        <label class="block text-sm font-semibold">Catégorie</label>
-        <select 
-          formControlName="categorieId" 
-          class="form-input w-full" 
-          required>
-          <option [ngValue]="0" disabled>Choisir une catégorie</option>
+        <label class="block text-sm font-semibold mb-1" for="categorieId">Catégorie</label>
+        <select
+          id="categorieId"
+          formControlName="categorieId"
+          required
+          class="form-select w-full border border-gray-300 rounded px-3 py-2"
+        >
+          <option [ngValue]="null" disabled>Choisir une catégorie</option>
           <option *ngFor="let cat of categories" [ngValue]="cat.idCat">
             {{ cat.nomCat }}
           </option>
         </select>
-        <div *ngIf="ajoutForm.get('categorieId')?.errors && ajoutForm.get('categorieId')?.touched" class="text-red-500 text-sm">
-          <div *ngIf="ajoutForm.get('categorieId')?.errors.required">
-            Veuillez sélectionner une catégorie.
-          </div>
+        <div *ngIf="ajoutForm.get('categorieId')?.touched && ajoutForm.get('categorieId')?.invalid" class="text-red-600 text-sm mt-1">
+          <div *ngIf="ajoutForm.get('categorieId')?.errors?.['required']">Veuillez sélectionner une catégorie.</div>
         </div>
       </div>
 
+      <!-- Prix et Quantité en grille -->
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+        <!-- Prix -->
         <div>
-          <label class="block text-sm font-semibold">Prix (FCFA/kg)</label>
-          <input 
-            type="number" 
-            formControlName="prixU" 
-            class="form-input w-full" 
-            placeholder="2500" 
+          <label class="block text-sm font-semibold mb-1" for="prixU">Prix (FCFA/kg)</label>
+          <input
+            id="prixU"
+            type="number"
+            formControlName="prixU"
+            placeholder="2500"
             required
+            class="form-input w-full border border-gray-300 rounded px-3 py-2"
           />
-          <div *ngIf="ajoutForm.get('prixU')?.errors && ajoutForm.get('prixU')?.touched" class="text-red-500 text-sm">
-            <div *ngIf="ajoutForm.get('prixU')?.errors.required">
-              Le prix unitaire est requis.
-            </div>
-            <div *ngIf="ajoutForm.get('prixU')?.errors.min">
-              Le prix unitaire doit être un nombre positif.
-            </div>
+          <div *ngIf="ajoutForm.get('prixU')?.touched && ajoutForm.get('prixU')?.invalid" class="text-red-600 text-sm mt-1">
+            <div *ngIf="ajoutForm.get('prixU')?.errors?.['required']">Le prix unitaire est requis.</div>
+            <div *ngIf="ajoutForm.get('prixU')?.errors?.['min']">Le prix doit être un nombre positif.</div>
           </div>
         </div>
+
+        <!-- Quantité stock -->
         <div>
-          <label class="block text-sm font-semibold">Quantité (kg)</label>
-          <input 
-            type="number" 
-            formControlName="quantiteStock" 
-            class="form-input w-full" 
-            placeholder="50" 
+          <label class="block text-sm font-semibold mb-1" for="quantiteStock">Quantité (kg)</label>
+          <input
+            id="quantiteStock"
+            type="number"
+            formControlName="quantiteStock"
+            placeholder="50"
             required
+            class="form-input w-full border border-gray-300 rounded px-3 py-2"
           />
-          <div *ngIf="ajoutForm.get('quantiteStock')?.errors && ajoutForm.get('quantiteStock')?.touched" class="text-red-500 text-sm">
-            <div *ngIf="ajoutForm.get('quantiteStock')?.errors.required">
-              La quantité en stock est requise.
-            </div>
-            <div *ngIf="ajoutForm.get('quantiteStock')?.errors.min">
-              La quantité en stock doit être un nombre positif.
-            </div>
+          <div *ngIf="ajoutForm.get('quantiteStock')?.touched && ajoutForm.get('quantiteStock')?.invalid" class="text-red-600 text-sm mt-1">
+            <div *ngIf="ajoutForm.get('quantiteStock')?.errors?.['required']">La quantité en stock est requise.</div>
+            <div *ngIf="ajoutForm.get('quantiteStock')?.errors?.['min']">La quantité doit être un nombre positif.</div>
           </div>
         </div>
+
       </div>
 
+      <!-- Description -->
       <div>
-        <label class="block text-sm font-semibold">Description</label>
-        <textarea 
-          formControlName="description" 
-          class="form-input w-full" 
-          rows="3" 
+        <label class="block text-sm font-semibold mb-1" for="description">Description</label>
+        <textarea
+          id="description"
+          formControlName="description"
+          rows="3"
           placeholder="Décrivez votre produit..."
+          class="form-textarea w-full border border-gray-300 rounded px-3 py-2"
         ></textarea>
       </div>
 
+      <!-- Date de Récolte / Expiration -->
       <div>
-        <label class="block text-sm font-semibold">Date de Récolte</label>
-        <input 
-          type="date" 
-          formControlName="dateExpiration" 
-          class="form-input w-full" 
-          required
+        <label class="block text-sm font-semibold mb-1" for="dateExpiration">Date de Récolte</label>
+        <input
+          id="dateExpiration"
+          type="date"
+          formControlName="dateExpiration"
+          class="form-input w-full border border-gray-300 rounded px-3 py-2"
         />
       </div>
 
-      <button 
-        type="submit" 
-        class="w-full bg-nnam-green text-gray-50 py-2 rounded font-semibold disabled:bg-gray-400 disabled:cursor-not-allowed" 
-        [disabled]="ajoutForm.invalid">
-        <i class="fas fa-plus mr-2"></i> Ajouter le Produit
+      <!-- Upload Image -->
+      <div>
+        <label class="block text-sm font-semibold mb-1" for="imageUpload">Image du Produit</label>
+        <input
+          id="imageUpload"
+          type="file"
+          accept="image/*"
+          (change)="onImageSelected($event)"
+          class="form-input w-full"
+        />
+        <div *ngIf="previewImage" class="mt-2">
+          <img [src]="previewImage" alt="Aperçu image produit" class="w-32 h-32 object-cover rounded border border-gray-300" />
+        </div>
+      </div>
+
+      <!-- Bouton Submit -->
+      <button
+        type="submit"
+        [disabled]="ajoutForm.invalid"
+        class="w-full bg-nnam-green text-white py-2 rounded font-semibold disabled:bg-gray-400 disabled:cursor-not-allowed flex justify-center items-center gap-2"
+      >
+        <i class="fas fa-plus"></i> Ajouter le Produit
       </button>
+
     </form>
   </div>
 </div>
