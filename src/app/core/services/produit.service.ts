@@ -35,4 +35,13 @@ export class ProduitService {
   getProduitsParNomCategorie(nomCategorie: string): Observable<Produit[]> {
     return this.httpClient.get<Produit[]>(`${environment.apiUrl}/categorie/nom/${nomCategorie}`);
   }
+
+  getProduitsPhares(): Observable<Produit[]> {
+  return this.httpClient.get<Produit[]>(`${environment.apiUrl}/produits/phares`);
+}
+ajouterProduitAvecImage(formData: FormData) {
+  return this.httpClient.post<Produit>(`${environment.apiUrl}/produits/add`, formData);
+}
+
+
 }

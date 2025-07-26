@@ -6,6 +6,7 @@ import { routes } from './app.routes';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { AppComponent } from './app.component';
+import { ToastrModule } from 'ngx-toastr';
 
 
 
@@ -17,6 +18,11 @@ export const appConfig: ApplicationConfig = {
     //provideClientHydration(),
 
     provideHttpClient(withInterceptorsFromDi()),
-    importProvidersFrom(FormsModule, ReactiveFormsModule, BrowserAnimationsModule)
+    importProvidersFrom(FormsModule, ReactiveFormsModule, BrowserAnimationsModule,
+ToastrModule.forRoot({
+        positionClass: 'toast-bottom-left',
+        preventDuplicates: true
+      })
+    )
   ]
 };

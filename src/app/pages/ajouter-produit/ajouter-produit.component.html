@@ -92,7 +92,7 @@
 
       <!-- Date de Récolte / Expiration -->
       <div>
-        <label class="block text-sm font-semibold mb-1" for="dateExpiration">Date de Récolte</label>
+        <label class="block text-sm font-semibold mb-1" for="dateExpiration">Date d'Expiration</label>
         <input
           id="dateExpiration"
           type="date"
@@ -102,7 +102,7 @@
       </div>
 
       <!-- Upload Image -->
-      <div>
+      <!--<div>
         <label class="block text-sm font-semibold mb-1" for="imageUpload">Image du Produit</label>
         <input
           id="imageUpload"
@@ -114,7 +114,14 @@
         <div *ngIf="previewImage" class="mt-2">
           <img [src]="previewImage" alt="Aperçu image produit" class="w-32 h-32 object-cover rounded border border-gray-300" />
         </div>
-      </div>
+      </div>-->
+      <div class="form-group">
+  <label for="image">Image du produit</label>
+  <input type="file" (change)="onImageSelected($event)" accept="image/*" />
+</div>
+
+<img *ngIf="previewImage" [src]="previewImage" alt="Aperçu" class="w-32 h-32 mt-2 object-cover border rounded">
+
 
       <!-- Bouton Submit -->
       <button
