@@ -1,0 +1,75 @@
+<div class="max-w-3xl mx-auto px-4 py-8">
+  <!-- En-tête -->
+  <div class="bg-nnam-green text-white rounded-lg p-6 mb-8">
+    <h1 class="text-3xl font-bold mb-2">Mon Profil Agriculteur</h1>
+    <p class="text-green-100">Gérez vos informations personnelles et votre ferme</p>
+  </div>
+
+  <!-- Contenu profil -->
+  <ng-container *ngIf="profil; else loading">
+    <div class="bg-white rounded-lg shadow p-6">
+
+      <!-- Informations et photo -->
+      <div class="flex items-center space-x-4 mb-6">
+        <div class="relative">
+          <img 
+            *ngIf="profil.photoUrl; else placeholder" 
+            [src]="profil.photoUrl" 
+            alt="Photo de profil" 
+            class="rounded-full w-20 h-20 object-cover border border-gray-300">
+
+          <ng-template #placeholder>
+            <div class="bg-nnam-green text-white rounded-full w-20 h-20 flex items-center justify-center text-3xl">
+              <i class="fas fa-tractor"></i>
+            </div>
+          </ng-template>
+
+          <!-- Input upload -->
+          <input type="file" (change)="onPhotoSelected($event)" class="absolute bottom-0 right-0 opacity-0 w-20 h-20 cursor-pointer">
+        </div>
+
+        <div>
+          <h2 class="text-xl font-bold">{{ profil.nomProfil }}</h2>
+          <p class="text-gray-600">{{ profil.zoneGeographique }}</p>
+        </div>
+      </div>
+
+      <!-- Form modification -->
+      <form *ngIf="isEditing" (ngSubmit)="saveChanges()" class="space-y-4">
+        <div>
+          <label class="block text-gray-700 font-medium mb-1">Nom du Profil</label>
+          <input [(ngModel)]="profil.nomProfil" name="nomProfil" class="form-input w-full" required>
+        </div>
+
+        <div>
+          <label class="block text-gray-700 font-medium mb-1">Zone Géographique</label>
+          <input [(ngModel)]="profil.zoneGeographique" name="zoneGeographique" class="form-input w-full" required>
+        </div>
+
+        <div class="flex space-x-2">
+          <button type="submit" class="bg-nnam-green hover:bg-green-700 text-white px-4 py-2 rounded">Enregistrer</button>
+          <button type="button" (click)="isEditing = false" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded">Annuler</button>
+        </div>
+      </form>
+
+      <!-- Actions -->
+      <div *ngIf="!isEditing" class="flex space-x-2">
+        <button (click)="isEditing = true" class="bg-nnam-orange hover:bg-orange-600 text-white px-4 py-2 rounded">Modifier</button>
+        <button (click)="deleteAccount()" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">Supprimer le compte</button>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- Chargement -->
+  <ng-template #loading>
+    <div class="text-center text-gray-600">
+      <i class="fas fa-spinner fa-spin text-2xl"></i>
+      <p>Chargement du profil...</p>
+    </div>
+  </ng-template>
+
+  <!-- Déconnexion -->
+  <div class="mt-8 text-center">
+    <button (click)="logout()" class="bg-nnam-brown hover:bg-brown-800 text-white px-6 py-3 rounded">Déconnexion</button>
+  </div>
+</div>

@@ -15,8 +15,16 @@ import { Produit } from '../../core/models/produit.model';
   styleUrls: ['./ajouter-produit.component.css']
 })
 export class AjouterProduitComponent implements OnInit {
-  ajoutForm: any; // On initialise à undefined pour éviter l'erreur d'utilisation avant l'initialisation
+  ajoutForm: any;
   categories: Categorie[] = [];
+  previewImage: string | null = null;
+  selectedImageFile: File | null = null; // ✅ fichier sélectionné
+
+  defaultImages: Record<number, string> = {
+    1: 'assets/images/default-fruits.jpg',
+    2: 'assets/images/default-legumes.jpg',
+    3: 'assets/images/default-cereales.jpg',
+  };
 
   constructor(
     private fb: FormBuilder,
@@ -29,46 +37,74 @@ export class AjouterProduitComponent implements OnInit {
     this.ajoutForm = this.fb.group({
       nomProduit: ['', [Validators.required, Validators.minLength(3)]],
       description: [''],
-      prixU: [0, [Validators.required, Validators.min(0)]],
+      prixU: [null, [Validators.required, Validators.min(0)]],
       dateExpiration: [''],
-      categorieId: [0, Validators.required],
-      quantiteStock: [0, [Validators.required, Validators.min(0)]]
+      categorieId: [null, Validators.required],
+      quantiteStock: [null, [Validators.required, Validators.min(0)]],
+      imageUrl: ['']
     });
 
     this.categorieService.getAllCategories().subscribe({
       next: (data) => this.categories = data,
-      error: (err) => console.error(err)
+      error: (err) => console.error('Erreur chargement catégories', err)
     });
   }
 
-  ajouterProduit() {
+  onImageSelected(event: Event): void {
+    const file = (event.target as HTMLInputElement)?.files?.[0];
+    if (file) {
+      this.selectedImageFile = file; // ✅ on stocke le fichier
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.previewImage = reader.result as string;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  ajouterProduit(): void {
     if (this.ajoutForm.valid) {
+      const formValues = this.ajoutForm.value;
+
+      let imageUrl = this.previewImage;
+      if (!imageUrl && formValues.categorieId && this.defaultImages[formValues.categorieId]) {
+        imageUrl = this.defaultImages[formValues.categorieId];
+      }
+
       const nouveauProduit: Produit = {
-        idProduit: 0, // L'ID sera généré par le backend
-        nomProduit: this.ajoutForm.value.nomProduit,
-        description: this.ajoutForm.value.description,
-        prixU: this.ajoutForm.value.prixU,
-        dateExpiration: this.ajoutForm.value.dateExpiration,
-        categorieId: this.ajoutForm.value.categorieId,
+        idProduit: 0,
+        nomProduit: formValues.nomProduit,
+        description: formValues.description,
+        prixU: formValues.prixU,
+        dateExpiration: formValues.dateExpiration,
+        categorieId: formValues.categorieId,
         stock: {
           nom: 'Stock principal',
-          quantiteStock: this.ajoutForm.value.quantiteStock
-        }
+          quantiteStock: formValues.quantiteStock
+        },
+        imageUrl: imageUrl || ''
       };
 
-      this.produitService.ajouterProduit(nouveauProduit).subscribe({
+      const formData = new FormData();
+      formData.append('produit', new Blob([JSON.stringify(nouveauProduit)], { type: 'application/json' }));
+
+      if (this.selectedImageFile) {
+        formData.append('image', this.selectedImageFile); // ✅ fichier image
+      }
+
+      this.produitService.ajouterProduitAvecImage(formData).subscribe({
         next: () => {
           alert("Produit ajouté avec succès.");
           this.router.navigate(['/agriculteur']);
         },
         error: (err) => {
-          console.error("Erreur lors de l'ajout.", err);
-          alert("Erreur, voir console.");
+          console.error("Erreur lors de l'ajout du produit :", err);
+          alert("Erreur lors de l'ajout du produit. Voir la console.");
         }
       });
     } else {
-      // Si le formulaire n'est pas valide, afficher un message d'erreur
-      alert("Veuillez remplir tous les champs obligatoires et corriger les erreurs.");
+      alert("Veuillez remplir tous les champs obligatoires.");
+      this.ajoutForm.markAllAsTouched();
     }
   }
 }

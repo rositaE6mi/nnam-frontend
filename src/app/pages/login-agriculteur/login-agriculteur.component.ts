@@ -9,6 +9,7 @@ import { AuthService } from '../../core/services/auth.service';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './login-agriculteur.component.html',
+  styleUrls: ['./login-agriculteur.component.css']
 })
 export class LoginAgriculteurComponent {
   credentials = { email: '', password: '' };
@@ -18,20 +19,30 @@ export class LoginAgriculteurComponent {
 
   ngOnInit(): void {
     const type = this.authService.getUserType();
-    if (type === 'agriculteur') this.router.navigate(['/agriculteur']);
-    if (type === 'client') this.router.navigate(['/client']);
+    if (type === 'AGRICULTEUR') this.router.navigate(['/agriculteur']);
+    if (type === 'CLIENT') this.router.navigate(['/client']);
+    if (type === 'ADMIN') this.router.navigate(['/admin-dashboard']);
   }
 
   login(): void {
-    const stored = localStorage.getItem('agriculteur');
-    if (stored) {
-      const user = JSON.parse(stored);
-      if (user.email === this.credentials.email && user.password === this.credentials.password) {
-        this.authService.setUserType('agriculteur');
-        this.router.navigate(['/agriculteur']);
-        return;
+    this.authService.login(this.credentials.email, this.credentials.password).subscribe({
+      next: (role) => {
+        if (role === 'AGRICULTEUR') {
+          localStorage.setItem('token', 'dummy-token');
+          this.authService.setUserType('AGRICULTEUR');
+          this.router.navigate(['/agriculteur']);
+        } else {
+          this.errorMessage = 'Cet utilisateur n’est pas un agriculteur.';
+        }
+      },
+      error: () => {
+        this.errorMessage = 'Email ou mot de passe invalide.';
       }
-    }
-    this.errorMessage = 'Email ou mot de passe invalide.';
+    });
+  }
+
+  motDePasseOublie(): void {
+    alert('Redirection vers la page de réinitialisation du mot de passe');
+    this.router.navigate(['/forgot-password']);
   }
 }

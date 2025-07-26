@@ -5,13 +5,13 @@
 .carousel-hero {
   position: relative;
   width: 100%;
-  height: 250px; /* Hauteur totale du carousel */
+  height: 250px;
   overflow: hidden;
 }
 
 .carousel-hero img {
   width: 100%;
-  height: 100%; /* Assure que l'image remplit toute la hauteur */
+  height: 100%;
   object-fit: cover;
   filter: brightness(0.72);
 }
@@ -33,15 +33,15 @@
 
 .carousel-hero .text-container {
   position: absolute;
-  bottom: 0; /* Positionne le texte en bas */
+  bottom: 0;
   left: 0;
   right: 0;
-  height: 50%; /* Prend la moitié de la hauteur */
+  height: 50%;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Centre horizontalement */
-  justify-content: center; /* Centre verticalement */
-  padding: 1rem; /* Espacement autour du texte */
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
 }
 
 .carousel-hero h1 {
@@ -50,12 +50,12 @@
 }
 
 .carousel-slide {
-  display: none; /* Masque les diapositives par défaut */
+  display: none;
   animation: fadeIn 0.8s ease-in-out;
 }
 
 .carousel-slide.active {
-  display: flex; /* Affiche la diapositive active */
+  display: flex;
 }
 
 @keyframes fadeIn {
@@ -87,7 +87,7 @@
 }
 
 .product-card {
-  width: 230px;
+  width: 280px; /* augmentée */
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 1px 8px #c7b2a333;
@@ -100,16 +100,17 @@
 
 .product-card .pc-icon-section {
   width: 100%;
-  height: 120px; /* Hauteur de la section contenant l'icône */
+  height: 170px; /* augmentée */
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #22b573, #16a34a); /* Exemple de dégradé */
+  background: linear-gradient(135deg, #009640, #432918); /* tes couleurs */
 }
 
-.product-card .pc-icon-section i {
-  font-size: 4em; /* Taille de l'icône */
-  color: #fff;
+.product-card .pc-icon-section img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .product-card .pc-content-section {
@@ -139,16 +140,19 @@
   border: none;
   color: #fff;
   border-radius: 6px;
-  width: 30px;
-  height: 30px;
-  font-size: 1.1em;
-  background: #22b573;
+  padding: 6px 12px;
+  font-size: 0.95em;
+  background: #FBBC19; /* bouton orange */
   cursor: pointer;
   box-shadow: 0 0 4px #aaa6;
 }
 
+.add-cart:hover {
+  background: #432918; /* marron foncé au survol */
+}
+
 .why-local {
-  background: #b69c86;
+  background: #432918; /* section pourquoi local en marron foncé */
   color: #fff;
   padding: 32px 0 30px 0;
   text-align: center;
@@ -169,7 +173,7 @@
 }
 
 .why-card {
-  background: #fff2;
+  background: rgba(255,255,255,0.1);
   border-radius: 10px;
   padding: 20px 16px 16px 16px;
   min-width: 220px;
@@ -181,18 +185,17 @@
 
 .why-icon {
   width: 100%;
-  height: 120px; /* Hauteur de la section contenant l'icône */
-  font-size: 3em; /* Taille de l'icône */
-  color: #fff;
+  height: 120px;
+  font-size: 3em;
+  color: #FBBC19; /* icône orange */
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #22b573, #16a34a); /* Exemple de dégradé */
 }
 
 .why-card h4 {
   margin-bottom: 6px;
-  color: #fff;
+  color: #FBBC19;
   font-size: 1.1em;
 }
 
@@ -202,7 +205,7 @@
 }
 
 .site-footer {
-  background: #6b4b38;
+  background: #009640; /* footer vert */
   color: #fff;
   padding: 30px 0 10px 0;
   font-size: 0.97em;
@@ -231,6 +234,16 @@
   margin-bottom: 0.4em;
 }
 
+.footer-cols a {
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-cols a:hover {
+  color: #FBBC19; /* orange au survol */
+}
+
 .newsletter-form {
   display: flex;
   align-items: center;
@@ -246,8 +259,8 @@
 }
 
 .newsletter-form button {
-  background: #ffd700;
-  color: #6b4b38;
+  background: #FBBC19;
+  color: #432918;
   border: none;
   padding: 6px 13px;
   border-radius: 0 4px 4px 0;
@@ -260,14 +273,14 @@
 }
 
 .footer-socials a {
-  color: #ffd700;
+  color: #fff;
   margin-right: 10px;
   font-size: 1.1em;
   transition: color 0.2s;
 }
 
 .footer-socials a:hover {
-  color: #fff;
+  color: #FBBC19;
 }
 
 .copyright {
