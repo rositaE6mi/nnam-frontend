@@ -16,8 +16,34 @@
   </div>
 
   <!-- ✅ Nos produits phares -->
-  <section class="main-products">
-    <h2>Nos Produits Phares</h2>
+  <section class="main-products"> 
+      <h2>Nos Produits Phares</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-8">
+                  <div *ngFor="let produit of produits" 
+            class="bg-white rounded-lg shadow hover:shadow-lg transition overflow-hidden cursor-pointer relative group" (click)="showProductDetail(produit.idProduit)">
+
+          <img 
+            [src]="produit.imageUrl || 'assets/images/default.jpg'" 
+            alt="{{ produit.nomProduit }}" 
+            class="w-full h-48 object-cover"
+            (error)="onImageError($event)">
+
+          <div class="p-4 pb-12"> <!-- pb-12 pour laisser la place au bouton -->
+            <h3 class="text-lg font-semibold text-nnam-brown mb-2">{{ produit.nomProduit }}</h3>
+            <p class="text-gray-600 text-sm mb-2">{{ produit.description }}</p>
+            <p class="text-nnam-green font-bold text-sm">Prix : {{ produit.prixU }} FCFA/kg</p>
+            <p class="text-gray-500 text-xs">Stock : {{ produit?.stock?.quantiteStock }} kg</p>
+          </div>
+
+          <!-- ✅ Bouton Ajouter au panier -->
+                  <button class="add-cart" (click)="addToCart($event, produit.idProduit)">Ajouter</button>
+
+        </div>
+
+  
+      </div>
+
+   <!-- <h2>Nos Produits Phares</h2>
     <div class="products-row">
       <div *ngFor="let produit of produits" class="product-card" (click)="showProductDetail(produit.id)">
         <div class="pc-icon-section">
@@ -30,7 +56,7 @@
         </div>
         <button class="add-cart" (click)="addToCart($event, produit.id)">Ajouter</button>
       </div>
-    </div>
+    </div>-->
   </section>
 
   <!-- ✅ Pourquoi Choisir Local -->
