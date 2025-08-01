@@ -116,4 +116,16 @@ export class HomeComponent implements OnInit {
   imgElement.src = 'assets/images/default.jpg';
 }
 
+getFullImageUrl(imageUrl?: string): string {
+  const baseUrl = 'http://localhost:8084/uploads/produits';
+
+  if (imageUrl && imageUrl.trim() !== '') {
+    return baseUrl + imageUrl;
+  }
+
+  return 'assets/images/default.jpg';
+}
+
+
+
 }

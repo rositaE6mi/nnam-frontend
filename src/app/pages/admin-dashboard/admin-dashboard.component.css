@@ -1,0 +1,213 @@
+:root {
+  --vert-principal: #009640;
+  --jaune-principal: #fbbc19;
+  --marron-principal: #432918;
+  --gris-fonce: #2f2f2f;
+  --gris-clair: #f5f5f5;
+  --texte-principal: #1a1a1a;
+  --texte-clair: #ffffff;
+}
+
+/* Structure générale */
+.max-w-7xl {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--texte-principal);
+  background-color: var(--gris-clair);
+  min-height: 100vh;
+}
+
+/* Section d'en-tête / Hero */
+.bg-gray-900 {
+  background-color: var(--marron-principal);
+  border-radius: 10px;
+  padding: 1.5rem;
+}
+
+.bg-gray-900 h1 {
+  color: var(--jaune-principal);
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+  font-size: 2rem;
+}
+
+.bg-gray-900 p {
+  color: #e6d5b8;
+  font-size: 1.1rem;
+}
+
+/* Card / bloc */
+.bg-gray-50 {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgb(0 0 0 / 0.1);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  transition: box-shadow 0.3s ease;
+}
+
+.bg-gray-50:hover {
+  box-shadow: 0 6px 14px rgb(0 0 0 / 0.15);
+}
+
+/* Titres */
+h2 {
+  color: var(--marron-principal);
+  font-weight: 600;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+/* Formulaire */
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  color: var(--marron-principal);
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 2px solid var(--vert-principal);
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.form-control:focus {
+  border-color: var(--jaune-principal);
+  box-shadow: 0 0 5px var(--jaune-principal);
+}
+
+/* Boutons */
+button {
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+  border: none;
+}
+
+button:focus {
+  outline: 2px dashed var(--jaune-principal);
+  outline-offset: 3px;
+}
+
+button.bg-blue-500 {
+  background-color: var(--vert-principal);
+  color: var(--texte-clair);
+  padding: 0.5rem 1.25rem;
+  border-radius: 8px;
+}
+
+button.bg-blue-500:hover {
+  background-color: #007530;
+}
+
+button.bg-yellow-500 {
+  background-color: var(--jaune-principal);
+  color: var(--marron-principal);
+  padding: 0.3rem 0.8rem;
+  border-radius: 6px;
+}
+
+button.bg-yellow-500:hover {
+  background-color: #432918;
+}
+
+button.bg-red-500 {
+  background-color: #fbbc19;
+  color: var(--texte-clair);
+  padding: 0.3rem 0.8rem;
+  border-radius: 6px;
+}
+
+button.bg-red-500:hover {
+  background-color: #fbbc19;
+}
+
+button.bg-gray-500 {
+  background-color: #999999;
+  color: var(--texte-clair);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+}
+
+button.bg-gray-500:hover {
+  background-color: #009640;
+}
+
+/* Tableau */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+thead tr {
+  background-color: var(--marron-principal);
+  color: var(--jaune-principal);
+  font-weight: 600;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+th, td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Responsive pour mobile */
+@media (max-width: 768px) {
+  .max-w-7xl {
+    padding: 1rem 0.5rem;
+  }
+
+  table, thead, tbody, th, td, tr {
+    display: block;
+  }
+
+  thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  tbody tr {
+    margin-bottom: 1.5rem;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 1rem;
+    background-color: white;
+  }
+
+  tbody td {
+    border: none;
+    position: relative;
+    padding-left: 50%;
+    white-space: normal;
+    text-align: right;
+  }
+
+  tbody td::before {
+    content: attr(data-label);
+    position: absolute;
+    top: 0;
+    left: 1rem;
+    width: 45%;
+    font-weight: bold;
+    white-space: nowrap;
+    color: var(--marron-principal);
+  }
+}

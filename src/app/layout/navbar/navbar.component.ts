@@ -99,4 +99,10 @@ onClickOutside(event: Event): void {
 
 
 }
+// méthode à ajouter dans NavbarComponent
+onCategorieClick(nomCat: string): void {
+  this.fermerTout();
+  this.router.navigate(['/recherche'], { queryParams: { q: nomCat.toLowerCase() } });
+}
+
 }
